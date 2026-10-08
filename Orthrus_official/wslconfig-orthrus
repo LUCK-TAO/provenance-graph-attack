@@ -1,0 +1,5 @@
+[wsl2]
+memory=24GB
+processors=24
+swap=16GB
+swapFile=D:\\App\\DockerDesktop\\Data\\wsl\\swap.vhdx

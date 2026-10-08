@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="950" viewBox="0 0 1900 950" role="img" aria-labelledby="title desc">
+  <title id="title">Macro-action black-box feedback and policy update</title>
+  <desc id="desc">A clean hand-drawn workflow. Multiple graph edits form one macro-action, the detector is queried once, four observable signals form the reward, and the policy update begins the next round.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M1 1L11 6L1 11Q4 6 1 1Z" fill="#25282c"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M1 1L11 6L1 11Q4 6 1 1Z" fill="#3b78a0"/>
+    </marker>
+    <style>
+      .bg{fill:#fffdf9}.zone1{fill:#fff7dc}.zone2{fill:#eaf7ff}.zone3{fill:#f3efff}.zone4{fill:#edfaef}
+      .ink{fill:none;stroke:#25282c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.thin{fill:none;stroke:#25282c;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+      .main{fill:none;stroke:#25282c;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+      .minor{fill:none;stroke:#25282c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+      .evidence{fill:none;stroke:#3b78a0;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:7 6;marker-end:url(#arrowBlue)}
+      .title{font:700 35px 'Comic Sans MS','Segoe Print',sans-serif;fill:#202328;text-anchor:middle}.stage{font:700 26px 'Comic Sans MS','Segoe Print',sans-serif;fill:#202328;text-anchor:middle}
+      .head{font:700 20px 'Comic Sans MS','Segoe Print',sans-serif;fill:#202328;text-anchor:middle}.text{font:17px 'Comic Sans MS','Segoe Print',sans-serif;fill:#384047;text-anchor:middle}
+      .small{font:15px 'Comic Sans MS','Segoe Print',sans-serif;fill:#4b535b;text-anchor:middle}.left{text-anchor:start}.num{font:700 21px 'Comic Sans MS','Segoe Print',sans-serif;fill:#fff;text-anchor:middle;dominant-baseline:middle}
+      .paper{fill:#fff;stroke:#25282c;stroke-width:2.5}.node{fill:#fff;stroke:#25282c;stroke-width:2.3}.blue{fill:#74c0fc;stroke:#25282c;stroke-width:2.3}.green{fill:#8ce99a;stroke:#25282c;stroke-width:2.3}.yellow{fill:#ffe066;stroke:#25282c;stroke-width:2.3}.coral{fill:#ff8787;stroke:#25282c;stroke-width:2.3}.purple{fill:#b197fc;stroke:#25282c;stroke-width:2.3}
+    </style>
+  </defs>
+
+  <rect class="bg" width="1900" height="950"/>
+  <text class="title" x="950" y="60">Macro-Action Feedback: One Batch, One Query, One Policy Update</text>
+
+  <!-- Soft, frameless stage backgrounds -->
+  <path class="zone1" d="M48 113Q48 88 78 90L708 96Q735 97 733 126L726 512Q725 538 696 537L77 531Q50 530 51 502Z"/>
+  <path class="zone2" d="M789 111Q790 88 815 90L1166 95Q1191 96 1189 122L1184 510Q1183 534 1158 533L812 529Q788 527 789 503Z"/>
+  <path class="zone3" d="M1244 113Q1245 88 1271 91L1837 97Q1863 98 1861 125L1854 513Q1853 539 1827 537L1268 531Q1243 530 1244 504Z"/>
+  <path class="zone4" d="M558 645Q559 620 587 622L1320 629Q1348 630 1346 659L1341 877Q1340 904 1311 902L583 896Q557 895 558 868Z"/>
+
+  <!-- Stage headers -->
+  <g>
+    <circle cx="88" cy="134" r="24" fill="#ff8787" stroke="#25282c" stroke-width="2.8"/><text class="num" x="88" y="135">1</text>
+    <text class="stage left" x="126" y="143">Construct the Macro-Action</text>
+    <circle cx="829" cy="134" r="24" fill="#74c0fc" stroke="#25282c" stroke-width="2.8"/><text class="num" x="829" y="135">2</text>
+    <text class="stage left" x="867" y="143">Query Once</text>
+    <circle cx="1284" cy="134" r="24" fill="#b197fc" stroke="#25282c" stroke-width="2.8"/><text class="num" x="1284" y="135">3</text>
+    <text class="stage left" x="1322" y="143">Compose the Reward</text>
+    <circle cx="598" cy="670" r="24" fill="#8ce99a" stroke="#25282c" stroke-width="2.8"/><text class="num" x="598" y="671">4</text>
+    <text class="stage left" x="636" y="679">Update the Action-Selection Policy</text>
+  </g>
+
+  <!-- Stage 1: a single clean graph-evolution strip -->
+  <g>
+    <rect x="258" y="174" width="267" height="51" rx="17" class="paper"/>
+    <text class="head" x="391" y="207">Current State  S<tspan baseline-shift="sub" font-size="13">t</tspan></text>
+    <path class="minor" d="M391 226V257"/>
+
+    <path d="M88 271Q88 253 107 254H676Q695 254 694 273L691 415Q691 434 671 433H106Q87 433 89 414Z" fill="#fff" stroke="#25282c" stroke-width="2.7"/>
+    <text class="small" x="391" y="289">L primitive edits applied to the latest graph</text>
+
+    <!-- Graph 0 -->
+    <g transform="translate(126 320)">
+      <path class="thin" d="M0 36L40 3L80 42M40 3L53 76"/>
+      <circle class="blue" cx="0" cy="36" r="9"/><circle class="node" cx="40" cy="3" r="9"/><circle class="green" cx="80" cy="42" r="9"/><circle class="node" cx="53" cy="76" r="9"/>
+      <text class="small" x="40" y="104">G<tspan baseline-shift="sub" font-size="11">t</tspan></text>
+    </g>
+    <path class="minor" d="M225 358H270"/>
+
+    <!-- edit tool, not another content box -->
+    <g transform="translate(283 321)">
+      <path d="M8 67L56 19L72 35L24 83L3 88Z" fill="#ff8787" stroke="#25282c" stroke-width="2.5"/>
+      <path d="M56 19L65 10L81 26L72 35" fill="#74c0fc" stroke="#25282c" stroke-width="2.5"/>
+      <text class="small" x="42" y="108">edit 1</text>
+    </g>
+    <path class="minor" d="M381 358H425"/>
+    <text class="head" x="446" y="365">···</text>
+    <path class="minor" d="M468 358H510"/>
+
+    <!-- Graph L -->
+    <g transform="translate(543 320)">
+      <path class="thin" d="M0 36L40 3L80 42M40 3L53 76M0 36L80 42M40 3L95 5"/>
+      <circle class="blue" cx="0" cy="36" r="9"/><circle class="node" cx="40" cy="3" r="9"/><circle class="green" cx="80" cy="42" r="9"/><circle class="node" cx="53" cy="76" r="9"/><circle class="yellow" cx="95" cy="5" r="9"/>
+      <text class="small" x="46" y="104">G<tspan baseline-shift="sub" font-size="11">t</tspan><tspan baseline-shift="super" font-size="10">(L)</tspan></text>
+    </g>
+
+    <g transform="translate(171 459)">
+      <path d="M0 21Q19 1 38 21Q19 41 0 21Z" fill="#fff" stroke="#25282c" stroke-width="2.2"/><circle cx="19" cy="21" r="6" fill="#25282c"/>
+      <path d="M-3 43L42 -2" stroke="#e03131" stroke-width="5" stroke-linecap="round"/>
+    </g>
+    <text class="head left" x="231" y="476">No detector query inside the batch</text>
+    <text class="small left" x="231" y="505">The detector only sees the final modified graph.</text>
+  </g>
+
+  <!-- Stage 1 to 2 -->
+  <path class="main" d="M733 316H854"/>
+  <text class="small" x="794" y="299">G<tspan baseline-shift="sub" font-size="11">t</tspan><tspan baseline-shift="super" font-size="10">(L)</tspan></text>
+
+  <!-- Stage 2: the completed graph enters the detector directly; the title states that this happens once. -->
+  <g>
+    <rect x="856" y="228" width="268" height="150" rx="24" fill="#fff" stroke="#25282c" stroke-width="2.7"/>
+    <text class="head" x="990" y="259">Black-Box Detector</text>
+    <!-- query request -->
+    <g transform="translate(883 278)">
+      <path d="M0 0H50L67 17V76H0Z" fill="#d8efff" stroke="#25282c" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M50 0V17H67" fill="#fff" stroke="#25282c" stroke-width="2.2" stroke-linejoin="round"/>
+      <text class="head" x="32" y="48">?</text>
+      <text class="small" x="33" y="96">query</text>
+    </g>
+    <path class="minor" d="M958 316H990"/>
+    <!-- opaque detector function -->
+    <g transform="translate(994 280)">
+      <rect width="101" height="72" rx="16" fill="#25282c"/>
+      <circle cx="18" cy="18" r="4" fill="#ff8787"/><circle cx="31" cy="18" r="4" fill="#ffe066"/><circle cx="44" cy="18" r="4" fill="#8ce99a"/>
+      <text x="51" y="51" text-anchor="middle" font-family="Comic Sans MS, Segoe Print, sans-serif" font-size="25" font-weight="700" fill="#fff">f(·)</text>
+    </g>
+
+    <path class="minor" d="M990 378V430"/>
+    <rect x="834" y="431" width="312" height="67" rx="19" class="paper"/>
+    <circle cx="870" cy="464" r="14" fill="#8ce99a" stroke="#25282c" stroke-width="2.2"/>
+    <path d="M863 464L869 471L879 456" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/>
+    <text class="head left" x="897" y="458">Observable Feedback</text>
+    <text class="small left" x="897" y="483">scores + alert status</text>
+  </g>
+
+  <!-- Stage 2 to 3 -->
+  <path class="main" d="M1190 316H1241"/>
+  <text class="small" x="1215" y="299">feedback</text>
+
+  <!-- Stage 3: four signals with short, non-crossing paths -->
+  <g>
+    <rect x="1282" y="181" width="244" height="84" rx="18" fill="#d8efff" stroke="#25282c" stroke-width="2.2"/>
+    <path class="thin" d="M1309 235L1341 214L1372 226L1409 193"/>
+    <text class="head left" x="1430" y="213">Score</text><text class="small left" x="1430" y="238">reduction</text>
+
+    <rect x="1562" y="181" width="252" height="84" rx="18" fill="#d8f7dd" stroke="#25282c" stroke-width="2.2"/>
+    <path class="thin" d="M1592 234H1649"/><path d="M1621 198V251" stroke="#e03131" stroke-width="3.5" stroke-dasharray="6 5"/>
+    <circle cx="1603" cy="241" r="7" fill="#ff8787" stroke="#25282c" stroke-width="2"/><circle cx="1638" cy="214" r="7" fill="#8ce99a" stroke="#25282c" stroke-width="2"/>
+    <text class="head left" x="1670" y="213">Threshold</text><text class="small left" x="1670" y="238">crossing</text>
+
+    <rect x="1282" y="292" width="244" height="84" rx="18" fill="#fff0ba" stroke="#25282c" stroke-width="2.2"/>
+    <circle cx="1320" cy="338" r="9" class="node"/><circle cx="1354" cy="322" r="9" class="blue"/><circle cx="1388" cy="344" r="9" class="green"/><path class="thin" d="M1329 334L1345 326M1363 327L1379 339"/>
+    <text class="head left" x="1420" y="324">Indirect</text><text class="small left" x="1420" y="350">effect</text>
+
+    <rect x="1562" y="292" width="252" height="84" rx="18" fill="#ffe1e1" stroke="#25282c" stroke-width="2.2"/>
+    <path class="ink" d="M1605 315L1587 334L1605 353M1643 315L1661 334L1643 353"/>
+    <text class="head left" x="1690" y="324">Edit</text><text class="small left" x="1690" y="350">cost</text>
+
+    <!-- Reward dial is drawn first so all four arrowheads remain visible above it. -->
+    <g transform="translate(1495 394)">
+      <circle cx="58" cy="55" r="55" fill="#fff" stroke="#25282c" stroke-width="3"/>
+      <path d="M58 55L89 30" stroke="#e03131" stroke-width="5" stroke-linecap="round"/><circle cx="58" cy="55" r="8" fill="#25282c"/>
+      <text class="head" x="58" y="130">reward  r<tspan baseline-shift="sub" font-size="12">t</tspan></text>
+    </g>
+    <!-- Each observable component contributes to the reward. -->
+    <path class="evidence" d="M1405 266C1411 376 1478 389 1518 411"/>
+    <path class="evidence" d="M1688 266C1681 376 1624 390 1588 411"/>
+    <path class="evidence" d="M1405 376C1438 418 1472 440 1500 449"/>
+    <path class="evidence" d="M1688 376C1655 418 1628 440 1606 449"/>
+  </g>
+
+  <!-- Reward to policy -->
+  <path class="main" d="M1553 532C1538 614 1436 710 1348 747"/>
+  <text class="small" x="1605" y="642">use the macro-action outcome</text>
+
+  <!-- Stage 4: one gear and one policy board -->
+  <g>
+    <g transform="translate(652 720)">
+      <path d="M64 0L76 18L98 15L102 37L122 46L112 66L125 84L107 99L109 121L87 124L75 143L55 134L36 147L22 129L0 131L-4 109L-24 100L-14 80L-27 62L-9 47L-11 25L11 22L23 3L43 12Z" fill="#8ce99a" stroke="#25282c" stroke-width="3"/>
+      <circle cx="49" cy="73" r="36" fill="#fff" stroke="#25282c" stroke-width="3"/><circle cx="49" cy="73" r="14" fill="#ffe066" stroke="#25282c" stroke-width="3"/>
+    </g>
+    <path class="minor" d="M782 793H837"/>
+    <rect x="842" y="717" width="383" height="135" rx="21" class="paper"/>
+    <text class="head" x="1034" y="749">Action-Selection Policy</text>
+    <path class="thin" d="M885 780H1181M885 811H1181"/>
+    <circle cx="972" cy="780" r="11" class="blue"/><circle cx="1097" cy="811" r="11" class="coral"/>
+    <rect x="784" y="843" width="447" height="45" rx="15" fill="#d8efff" stroke="#25282c" stroke-width="2.5"/>
+    <text class="head" x="1008" y="873">Next State  S<tspan baseline-shift="sub" font-size="13">t+1</tspan>  + updated policy</text>
+  </g>
+
+  <!-- Clean return path kept outside all content -->
+  <path class="main" d="M558 784H350Q248 784 248 681V536"/>
+  <text class="small" x="396" y="766">continue with the latest graph</text>
+  <text class="small left" x="265" y="650">next round</text>
+
+</svg>

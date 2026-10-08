@@ -1,0 +1,1071 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Flash Evaluation on DARPA E3 Cadets Dataset: \n",
+    "\n",
+    "This notebook is specifically designed for the evaluation of Flash on the DARPA E3 Cadets dataset. Notably, the Cadets dataset is characterized as a node-level dataset. In our analysis, Flash is configured to operate in a node-level setting to aptly assess this dataset. A key aspect to note is that the Cadets dataset lacks certain essential node attributes for specific node types. This limitation means that Flash cannot be operated in a decoupled mode with offline GNN embeddings for this dataset. Consequently, we employ an online GNN coupled with word2vec semantic embeddings to achieve effective evaluation results for this dataset.\n",
+    "\n",
+    "## Dataset Access: \n",
+    "- Access the Cadets dataset via the following link: [Cadets Dataset](https://drive.google.com/drive/folders/1QlbUFWAGq3Hpl8wVdzOdIoZLFxkII4EK).\n",
+    "- The dataset files will be downloaded automatically by the script.\n",
+    "\n",
+    "## Data Parsing and Execution:\n",
+    "- The script is designed to automatically parse the downloaded data files.\n",
+    "- Execute all cells within this notebook to obtain the evaluation results.\n",
+    "\n",
+    "## Model Training and Execution Flexibility:\n",
+    "- The notebook is configured to use pre-trained model weights by default.\n",
+    "- It also provides the option to set parameters for independently training Graph Neural Networks (GNNs) and word2vec models.\n",
+    "- These newly trained models can then be utilized for a comprehensive evaluation of the dataset.\n",
+    "\n",
+    "Adhere to these steps for a detailed and effective analysis of the Cadets dataset using Flash.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "F1op-CbyLuN4",
+    "tags": [],
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:06.814757Z",
+     "start_time": "2026-02-03T08:05:03.729055Z"
+    }
+   },
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "from sklearn.preprocessing import LabelEncoder\n",
+    "import torch\n",
+    "from torch_geometric.data import Data\n",
+    "import os\n",
+    "import torch.nn.functional as F\n",
+    "import orjson as json\n",
+    "import warnings\n",
+    "import matplotlib.pyplot as plt\n",
+    "from sklearn.manifold import TSNE\n",
+    "warnings.filterwarnings('ignore')\n",
+    "from torch_geometric.loader import NeighborLoader\n",
+    "import multiprocessing\n",
+    "\n",
+    "device = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\n",
+    "%matplotlib inline"
+   ],
+   "outputs": [],
+   "execution_count": 2
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2026-02-02T08:05:09.671856Z",
+     "start_time": "2026-02-02T08:04:27.249768Z"
+    }
+   },
+   "source": [
+    "import gdown\n",
+    "urls = [\"https://drive.google.com/file/d/1AcWrYiBmgAqp7DizclKJYYJJBQbnDMfb/view?usp=drive_link\",\n",
+    "      \"https://drive.google.com/file/d/1EycO23tEvZVnN3VxOHZ7gdbSCwqEZTI1/view?usp=drive_link\"]\n",
+    "for url in urls:\n",
+    "    gdown.download(url, quiet=False, use_cookies=False, fuzzy=True)"
+   ],
+   "outputs": [
+    {
+     "ename": "ConnectionError",
+     "evalue": "HTTPSConnectionPool(host='drive.google.com', port=443): Max retries exceeded with url: /uc?id=1AcWrYiBmgAqp7DizclKJYYJJBQbnDMfb (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000002220512E5E0>: Failed to establish a new connection: [WinError 10060] 由于连接方在�?段时间后没有正确答复或连接的主机没有反应，连接尝试失败�??'))",
+     "output_type": "error",
+     "traceback": [
+      "\u001B[1;31m---------------------------------------------------------------------------\u001B[0m",
+      "\u001B[1;31mTimeoutError\u001B[0m                              Traceback (most recent call last)",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\connection.py:198\u001B[0m, in \u001B[0;36mHTTPConnection._new_conn\u001B[1;34m(self)\u001B[0m\n\u001B[0;32m    197\u001B[0m \u001B[38;5;28;01mtry\u001B[39;00m:\n\u001B[1;32m--> 198\u001B[0m     sock \u001B[38;5;241m=\u001B[39m \u001B[43mconnection\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mcreate_connection\u001B[49m\u001B[43m(\u001B[49m\n\u001B[0;32m    199\u001B[0m \u001B[43m        \u001B[49m\u001B[43m(\u001B[49m\u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43m_dns_host\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mport\u001B[49m\u001B[43m)\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    200\u001B[0m \u001B[43m        \u001B[49m\u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mtimeout\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    201\u001B[0m \u001B[43m        \u001B[49m\u001B[43msource_address\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43msource_address\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    202\u001B[0m \u001B[43m        \u001B[49m\u001B[43msocket_options\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43msocket_options\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    203\u001B[0m \u001B[43m    \u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m    204\u001B[0m \u001B[38;5;28;01mexcept\u001B[39;00m socket\u001B[38;5;241m.\u001B[39mgaierror \u001B[38;5;28;01mas\u001B[39;00m e:\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\util\\connection.py:85\u001B[0m, in \u001B[0;36mcreate_connection\u001B[1;34m(address, timeout, source_address, socket_options)\u001B[0m\n\u001B[0;32m     84\u001B[0m \u001B[38;5;28;01mtry\u001B[39;00m:\n\u001B[1;32m---> 85\u001B[0m     \u001B[38;5;28;01mraise\u001B[39;00m err\n\u001B[0;32m     86\u001B[0m \u001B[38;5;28;01mfinally\u001B[39;00m:\n\u001B[0;32m     87\u001B[0m     \u001B[38;5;66;03m# Break explicitly a reference cycle\u001B[39;00m\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\util\\connection.py:73\u001B[0m, in \u001B[0;36mcreate_connection\u001B[1;34m(address, timeout, source_address, socket_options)\u001B[0m\n\u001B[0;32m     72\u001B[0m     sock\u001B[38;5;241m.\u001B[39mbind(source_address)\n\u001B[1;32m---> 73\u001B[0m \u001B[43msock\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mconnect\u001B[49m\u001B[43m(\u001B[49m\u001B[43msa\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m     74\u001B[0m \u001B[38;5;66;03m# Break explicitly a reference cycle\u001B[39;00m\n",
+      "\u001B[1;31mTimeoutError\u001B[0m: [WinError 10060] 由于连接方在�?段时间后没有正确答复或连接的主机没有反应，连接尝试失败�??",
+      "\nThe above exception was the direct cause of the following exception:\n",
+      "\u001B[1;31mNewConnectionError\u001B[0m                        Traceback (most recent call last)",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\connectionpool.py:787\u001B[0m, in \u001B[0;36mHTTPConnectionPool.urlopen\u001B[1;34m(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)\u001B[0m\n\u001B[0;32m    786\u001B[0m \u001B[38;5;66;03m# Make the request on the HTTPConnection object\u001B[39;00m\n\u001B[1;32m--> 787\u001B[0m response \u001B[38;5;241m=\u001B[39m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39m_make_request(\n\u001B[0;32m    788\u001B[0m     conn,\n\u001B[0;32m    789\u001B[0m     method,\n\u001B[0;32m    790\u001B[0m     url,\n\u001B[0;32m    791\u001B[0m     timeout\u001B[38;5;241m=\u001B[39mtimeout_obj,\n\u001B[0;32m    792\u001B[0m     body\u001B[38;5;241m=\u001B[39mbody,\n\u001B[0;32m    793\u001B[0m     headers\u001B[38;5;241m=\u001B[39mheaders,\n\u001B[0;32m    794\u001B[0m     chunked\u001B[38;5;241m=\u001B[39mchunked,\n\u001B[0;32m    795\u001B[0m     retries\u001B[38;5;241m=\u001B[39mretries,\n\u001B[0;32m    796\u001B[0m     response_conn\u001B[38;5;241m=\u001B[39mresponse_conn,\n\u001B[0;32m    797\u001B[0m     preload_content\u001B[38;5;241m=\u001B[39mpreload_content,\n\u001B[0;32m    798\u001B[0m     decode_content\u001B[38;5;241m=\u001B[39mdecode_content,\n\u001B[0;32m    799\u001B[0m     \u001B[38;5;241m*\u001B[39m\u001B[38;5;241m*\u001B[39mresponse_kw,\n\u001B[0;32m    800\u001B[0m )\n\u001B[0;32m    802\u001B[0m \u001B[38;5;66;03m# Everything went great!\u001B[39;00m\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\connectionpool.py:488\u001B[0m, in \u001B[0;36mHTTPConnectionPool._make_request\u001B[1;34m(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)\u001B[0m\n\u001B[0;32m    487\u001B[0m         new_e \u001B[38;5;241m=\u001B[39m _wrap_proxy_error(new_e, conn\u001B[38;5;241m.\u001B[39mproxy\u001B[38;5;241m.\u001B[39mscheme)\n\u001B[1;32m--> 488\u001B[0m     \u001B[38;5;28;01mraise\u001B[39;00m new_e\n\u001B[0;32m    490\u001B[0m \u001B[38;5;66;03m# conn.request() calls http.client.*.request, not the method in\u001B[39;00m\n\u001B[0;32m    491\u001B[0m \u001B[38;5;66;03m# urllib3.request. It also calls makefile (recv) on the socket.\u001B[39;00m\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\connectionpool.py:464\u001B[0m, in \u001B[0;36mHTTPConnectionPool._make_request\u001B[1;34m(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)\u001B[0m\n\u001B[0;32m    463\u001B[0m \u001B[38;5;28;01mtry\u001B[39;00m:\n\u001B[1;32m--> 464\u001B[0m     \u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43m_validate_conn\u001B[49m\u001B[43m(\u001B[49m\u001B[43mconn\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m    465\u001B[0m \u001B[38;5;28;01mexcept\u001B[39;00m (SocketTimeout, BaseSSLError) \u001B[38;5;28;01mas\u001B[39;00m e:\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\connectionpool.py:1093\u001B[0m, in \u001B[0;36mHTTPSConnectionPool._validate_conn\u001B[1;34m(self, conn)\u001B[0m\n\u001B[0;32m   1092\u001B[0m \u001B[38;5;28;01mif\u001B[39;00m conn\u001B[38;5;241m.\u001B[39mis_closed:\n\u001B[1;32m-> 1093\u001B[0m     \u001B[43mconn\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mconnect\u001B[49m\u001B[43m(\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m   1095\u001B[0m \u001B[38;5;66;03m# TODO revise this, see https://github.com/urllib3/urllib3/issues/2791\u001B[39;00m\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\connection.py:753\u001B[0m, in \u001B[0;36mHTTPSConnection.connect\u001B[1;34m(self)\u001B[0m\n\u001B[0;32m    752\u001B[0m sock: socket\u001B[38;5;241m.\u001B[39msocket \u001B[38;5;241m|\u001B[39m ssl\u001B[38;5;241m.\u001B[39mSSLSocket\n\u001B[1;32m--> 753\u001B[0m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39msock \u001B[38;5;241m=\u001B[39m sock \u001B[38;5;241m=\u001B[39m \u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43m_new_conn\u001B[49m\u001B[43m(\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m    754\u001B[0m server_hostname: \u001B[38;5;28mstr\u001B[39m \u001B[38;5;241m=\u001B[39m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mhost\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\connection.py:213\u001B[0m, in \u001B[0;36mHTTPConnection._new_conn\u001B[1;34m(self)\u001B[0m\n\u001B[0;32m    212\u001B[0m \u001B[38;5;28;01mexcept\u001B[39;00m \u001B[38;5;167;01mOSError\u001B[39;00m \u001B[38;5;28;01mas\u001B[39;00m e:\n\u001B[1;32m--> 213\u001B[0m     \u001B[38;5;28;01mraise\u001B[39;00m NewConnectionError(\n\u001B[0;32m    214\u001B[0m         \u001B[38;5;28mself\u001B[39m, \u001B[38;5;124mf\u001B[39m\u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mFailed to establish a new connection: \u001B[39m\u001B[38;5;132;01m{\u001B[39;00me\u001B[38;5;132;01m}\u001B[39;00m\u001B[38;5;124m\"\u001B[39m\n\u001B[0;32m    215\u001B[0m     ) \u001B[38;5;28;01mfrom\u001B[39;00m\u001B[38;5;250m \u001B[39m\u001B[38;5;21;01me\u001B[39;00m\n\u001B[0;32m    217\u001B[0m sys\u001B[38;5;241m.\u001B[39maudit(\u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mhttp.client.connect\u001B[39m\u001B[38;5;124m\"\u001B[39m, \u001B[38;5;28mself\u001B[39m, \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mhost, \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mport)\n",
+      "\u001B[1;31mNewConnectionError\u001B[0m: <urllib3.connection.HTTPSConnection object at 0x000002220512E5E0>: Failed to establish a new connection: [WinError 10060] 由于连接方在�?段时间后没有正确答复或连接的主机没有反应，连接尝试失败�??",
+      "\nThe above exception was the direct cause of the following exception:\n",
+      "\u001B[1;31mMaxRetryError\u001B[0m                             Traceback (most recent call last)",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\requests\\adapters.py:644\u001B[0m, in \u001B[0;36mHTTPAdapter.send\u001B[1;34m(self, request, stream, timeout, verify, cert, proxies)\u001B[0m\n\u001B[0;32m    643\u001B[0m \u001B[38;5;28;01mtry\u001B[39;00m:\n\u001B[1;32m--> 644\u001B[0m     resp \u001B[38;5;241m=\u001B[39m \u001B[43mconn\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43murlopen\u001B[49m\u001B[43m(\u001B[49m\n\u001B[0;32m    645\u001B[0m \u001B[43m        \u001B[49m\u001B[43mmethod\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[43mrequest\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mmethod\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    646\u001B[0m \u001B[43m        \u001B[49m\u001B[43murl\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[43murl\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    647\u001B[0m \u001B[43m        \u001B[49m\u001B[43mbody\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[43mrequest\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mbody\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    648\u001B[0m \u001B[43m        \u001B[49m\u001B[43mheaders\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[43mrequest\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mheaders\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    649\u001B[0m \u001B[43m        \u001B[49m\u001B[43mredirect\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43;01mFalse\u001B[39;49;00m\u001B[43m,\u001B[49m\n\u001B[0;32m    650\u001B[0m \u001B[43m        \u001B[49m\u001B[43massert_same_host\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43;01mFalse\u001B[39;49;00m\u001B[43m,\u001B[49m\n\u001B[0;32m    651\u001B[0m \u001B[43m        \u001B[49m\u001B[43mpreload_content\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43;01mFalse\u001B[39;49;00m\u001B[43m,\u001B[49m\n\u001B[0;32m    652\u001B[0m \u001B[43m        \u001B[49m\u001B[43mdecode_content\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43;01mFalse\u001B[39;49;00m\u001B[43m,\u001B[49m\n\u001B[0;32m    653\u001B[0m \u001B[43m        \u001B[49m\u001B[43mretries\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43mself\u001B[39;49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mmax_retries\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    654\u001B[0m \u001B[43m        \u001B[49m\u001B[43mtimeout\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[43mtimeout\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    655\u001B[0m \u001B[43m        \u001B[49m\u001B[43mchunked\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[43mchunked\u001B[49m\u001B[43m,\u001B[49m\n\u001B[0;32m    656\u001B[0m \u001B[43m    \u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m    658\u001B[0m \u001B[38;5;28;01mexcept\u001B[39;00m (ProtocolError, \u001B[38;5;167;01mOSError\u001B[39;00m) \u001B[38;5;28;01mas\u001B[39;00m err:\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\connectionpool.py:841\u001B[0m, in \u001B[0;36mHTTPConnectionPool.urlopen\u001B[1;34m(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)\u001B[0m\n\u001B[0;32m    839\u001B[0m     new_e \u001B[38;5;241m=\u001B[39m ProtocolError(\u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mConnection aborted.\u001B[39m\u001B[38;5;124m\"\u001B[39m, new_e)\n\u001B[1;32m--> 841\u001B[0m retries \u001B[38;5;241m=\u001B[39m \u001B[43mretries\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mincrement\u001B[49m\u001B[43m(\u001B[49m\n\u001B[0;32m    842\u001B[0m \u001B[43m    \u001B[49m\u001B[43mmethod\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43murl\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43merror\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[43mnew_e\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43m_pool\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43mself\u001B[39;49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43m_stacktrace\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[43msys\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mexc_info\u001B[49m\u001B[43m(\u001B[49m\u001B[43m)\u001B[49m\u001B[43m[\u001B[49m\u001B[38;5;241;43m2\u001B[39;49m\u001B[43m]\u001B[49m\n\u001B[0;32m    843\u001B[0m \u001B[43m\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m    844\u001B[0m retries\u001B[38;5;241m.\u001B[39msleep()\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\urllib3\\util\\retry.py:519\u001B[0m, in \u001B[0;36mRetry.increment\u001B[1;34m(self, method, url, response, error, _pool, _stacktrace)\u001B[0m\n\u001B[0;32m    518\u001B[0m     reason \u001B[38;5;241m=\u001B[39m error \u001B[38;5;129;01mor\u001B[39;00m ResponseError(cause)\n\u001B[1;32m--> 519\u001B[0m     \u001B[38;5;28;01mraise\u001B[39;00m MaxRetryError(_pool, url, reason) \u001B[38;5;28;01mfrom\u001B[39;00m\u001B[38;5;250m \u001B[39m\u001B[38;5;21;01mreason\u001B[39;00m  \u001B[38;5;66;03m# type: ignore[arg-type]\u001B[39;00m\n\u001B[0;32m    521\u001B[0m log\u001B[38;5;241m.\u001B[39mdebug(\u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mIncremented Retry for (url=\u001B[39m\u001B[38;5;124m'\u001B[39m\u001B[38;5;132;01m%s\u001B[39;00m\u001B[38;5;124m'\u001B[39m\u001B[38;5;124m): \u001B[39m\u001B[38;5;132;01m%r\u001B[39;00m\u001B[38;5;124m\"\u001B[39m, url, new_retry)\n",
+      "\u001B[1;31mMaxRetryError\u001B[0m: HTTPSConnectionPool(host='drive.google.com', port=443): Max retries exceeded with url: /uc?id=1AcWrYiBmgAqp7DizclKJYYJJBQbnDMfb (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000002220512E5E0>: Failed to establish a new connection: [WinError 10060] 由于连接方在�?段时间后没有正确答复或连接的主机没有反应，连接尝试失败�??'))",
+      "\nDuring handling of the above exception, another exception occurred:\n",
+      "\u001B[1;31mConnectionError\u001B[0m                           Traceback (most recent call last)",
+      "Cell \u001B[1;32mIn[36], line 5\u001B[0m\n\u001B[0;32m      2\u001B[0m urls \u001B[38;5;241m=\u001B[39m [\u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mhttps://drive.google.com/file/d/1AcWrYiBmgAqp7DizclKJYYJJBQbnDMfb/view?usp=drive_link\u001B[39m\u001B[38;5;124m\"\u001B[39m,\n\u001B[0;32m      3\u001B[0m       \u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mhttps://drive.google.com/file/d/1EycO23tEvZVnN3VxOHZ7gdbSCwqEZTI1/view?usp=drive_link\u001B[39m\u001B[38;5;124m\"\u001B[39m]\n\u001B[0;32m      4\u001B[0m \u001B[38;5;28;01mfor\u001B[39;00m url \u001B[38;5;129;01min\u001B[39;00m urls:\n\u001B[1;32m----> 5\u001B[0m     \u001B[43mgdown\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mdownload\u001B[49m\u001B[43m(\u001B[49m\u001B[43murl\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43mquiet\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43;01mFalse\u001B[39;49;00m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43muse_cookies\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43;01mFalse\u001B[39;49;00m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43mfuzzy\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43;01mTrue\u001B[39;49;00m\u001B[43m)\u001B[49m\n",
+      "File \u001B[1;32m~\\AppData\\Roaming\\Python\\Python39\\site-packages\\gdown\\download.py:202\u001B[0m, in \u001B[0;36mdownload\u001B[1;34m(url, output, quiet, proxy, speed, use_cookies, verify, id, fuzzy, resume, format, user_agent, log_messages)\u001B[0m\n\u001B[0;32m    199\u001B[0m     is_gdrive_download_link \u001B[38;5;241m=\u001B[39m \u001B[38;5;28;01mTrue\u001B[39;00m\n\u001B[0;32m    201\u001B[0m \u001B[38;5;28;01mwhile\u001B[39;00m \u001B[38;5;28;01mTrue\u001B[39;00m:\n\u001B[1;32m--> 202\u001B[0m     res \u001B[38;5;241m=\u001B[39m \u001B[43msess\u001B[49m\u001B[38;5;241;43m.\u001B[39;49m\u001B[43mget\u001B[49m\u001B[43m(\u001B[49m\u001B[43murl\u001B[49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43mstream\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[38;5;28;43;01mTrue\u001B[39;49;00m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[43mverify\u001B[49m\u001B[38;5;241;43m=\u001B[39;49m\u001B[43mverify\u001B[49m\u001B[43m)\u001B[49m\n\u001B[0;32m    204\u001B[0m     \u001B[38;5;28;01mif\u001B[39;00m \u001B[38;5;129;01mnot\u001B[39;00m (gdrive_file_id \u001B[38;5;129;01mand\u001B[39;00m is_gdrive_download_link):\n\u001B[0;32m    205\u001B[0m         \u001B[38;5;28;01mbreak\u001B[39;00m\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\requests\\sessions.py:602\u001B[0m, in \u001B[0;36mSession.get\u001B[1;34m(self, url, **kwargs)\u001B[0m\n\u001B[0;32m    594\u001B[0m \u001B[38;5;250m\u001B[39m\u001B[38;5;124mr\u001B[39m\u001B[38;5;124;03m\"\"\"Sends a GET request. Returns :class:`Response` object.\u001B[39;00m\n\u001B[0;32m    595\u001B[0m \n\u001B[0;32m    596\u001B[0m \u001B[38;5;124;03m:param url: URL for the new :class:`Request` object.\u001B[39;00m\n\u001B[0;32m    597\u001B[0m \u001B[38;5;124;03m:param \\*\\*kwargs: Optional arguments that ``request`` takes.\u001B[39;00m\n\u001B[0;32m    598\u001B[0m \u001B[38;5;124;03m:rtype: requests.Response\u001B[39;00m\n\u001B[0;32m    599\u001B[0m \u001B[38;5;124;03m\"\"\"\u001B[39;00m\n\u001B[0;32m    601\u001B[0m kwargs\u001B[38;5;241m.\u001B[39msetdefault(\u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mallow_redirects\u001B[39m\u001B[38;5;124m\"\u001B[39m, \u001B[38;5;28;01mTrue\u001B[39;00m)\n\u001B[1;32m--> 602\u001B[0m \u001B[38;5;28;01mreturn\u001B[39;00m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39mrequest(\u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mGET\u001B[39m\u001B[38;5;124m\"\u001B[39m, url, \u001B[38;5;241m*\u001B[39m\u001B[38;5;241m*\u001B[39mkwargs)\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\requests\\sessions.py:589\u001B[0m, in \u001B[0;36mSession.request\u001B[1;34m(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)\u001B[0m\n\u001B[0;32m    584\u001B[0m send_kwargs \u001B[38;5;241m=\u001B[39m {\n\u001B[0;32m    585\u001B[0m     \u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mtimeout\u001B[39m\u001B[38;5;124m\"\u001B[39m: timeout,\n\u001B[0;32m    586\u001B[0m     \u001B[38;5;124m\"\u001B[39m\u001B[38;5;124mallow_redirects\u001B[39m\u001B[38;5;124m\"\u001B[39m: allow_redirects,\n\u001B[0;32m    587\u001B[0m }\n\u001B[0;32m    588\u001B[0m send_kwargs\u001B[38;5;241m.\u001B[39mupdate(settings)\n\u001B[1;32m--> 589\u001B[0m resp \u001B[38;5;241m=\u001B[39m \u001B[38;5;28mself\u001B[39m\u001B[38;5;241m.\u001B[39msend(prep, \u001B[38;5;241m*\u001B[39m\u001B[38;5;241m*\u001B[39msend_kwargs)\n\u001B[0;32m    591\u001B[0m \u001B[38;5;28;01mreturn\u001B[39;00m resp\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\requests\\sessions.py:703\u001B[0m, in \u001B[0;36mSession.send\u001B[1;34m(self, request, **kwargs)\u001B[0m\n\u001B[0;32m    700\u001B[0m start \u001B[38;5;241m=\u001B[39m preferred_clock()\n\u001B[0;32m    702\u001B[0m \u001B[38;5;66;03m# Send the request\u001B[39;00m\n\u001B[1;32m--> 703\u001B[0m r \u001B[38;5;241m=\u001B[39m adapter\u001B[38;5;241m.\u001B[39msend(request, \u001B[38;5;241m*\u001B[39m\u001B[38;5;241m*\u001B[39mkwargs)\n\u001B[0;32m    705\u001B[0m \u001B[38;5;66;03m# Total elapsed time of the request (approximately)\u001B[39;00m\n\u001B[0;32m    706\u001B[0m elapsed \u001B[38;5;241m=\u001B[39m preferred_clock() \u001B[38;5;241m-\u001B[39m start\n",
+      "File \u001B[1;32mD:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\requests\\adapters.py:677\u001B[0m, in \u001B[0;36mHTTPAdapter.send\u001B[1;34m(self, request, stream, timeout, verify, cert, proxies)\u001B[0m\n\u001B[0;32m    673\u001B[0m     \u001B[38;5;28;01mif\u001B[39;00m \u001B[38;5;28misinstance\u001B[39m(e\u001B[38;5;241m.\u001B[39mreason, _SSLError):\n\u001B[0;32m    674\u001B[0m         \u001B[38;5;66;03m# This branch is for urllib3 v1.22 and later.\u001B[39;00m\n\u001B[0;32m    675\u001B[0m         \u001B[38;5;28;01mraise\u001B[39;00m SSLError(e, request\u001B[38;5;241m=\u001B[39mrequest)\n\u001B[1;32m--> 677\u001B[0m     \u001B[38;5;28;01mraise\u001B[39;00m \u001B[38;5;167;01mConnectionError\u001B[39;00m(e, request\u001B[38;5;241m=\u001B[39mrequest)\n\u001B[0;32m    679\u001B[0m \u001B[38;5;28;01mexcept\u001B[39;00m ClosedPoolError \u001B[38;5;28;01mas\u001B[39;00m e:\n\u001B[0;32m    680\u001B[0m     \u001B[38;5;28;01mraise\u001B[39;00m \u001B[38;5;167;01mConnectionError\u001B[39;00m(e, request\u001B[38;5;241m=\u001B[39mrequest)\n",
+      "\u001B[1;31mConnectionError\u001B[0m: HTTPSConnectionPool(host='drive.google.com', port=443): Max retries exceeded with url: /uc?id=1AcWrYiBmgAqp7DizclKJYYJJBQbnDMfb (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000002220512E5E0>: Failed to establish a new connection: [WinError 10060] 由于连接方在�?段时间后没有正确答复或连接的主机没有反应，连接尝试失败�??'))"
+     ]
+    }
+   ],
+   "execution_count": 36
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "tags": [],
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:08.503034Z",
+     "start_time": "2026-02-03T08:05:08.484950Z"
+    }
+   },
+   "source": [
+    "Train = False"
+   ],
+   "outputs": [],
+   "execution_count": 3
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "nM7KaeCbA_mQ",
+    "tags": [],
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:10.004763Z",
+     "start_time": "2026-02-03T08:05:10.000800Z"
+    }
+   },
+   "source": [
+    "from pprint import pprint\n",
+    "import gzip\n",
+    "from sklearn.manifold import TSNE\n",
+    "import json\n",
+    "import copy\n",
+    "import os"
+   ],
+   "outputs": [],
+   "execution_count": 4
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "tags": [],
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:11.914854Z",
+     "start_time": "2026-02-03T08:05:11.902347Z"
+    }
+   },
+   "source": [
+    "import re\n",
+    "\n",
+    "def extract_uuid(line):\n",
+    "    pattern_uuid = re.compile(r'uuid\\\":\\\"(.*?)\\\"')\n",
+    "    return pattern_uuid.findall(line)\n",
+    "\n",
+    "def extract_subject_type(line):\n",
+    "    pattern_type = re.compile(r'type\\\":\\\"(.*?)\\\"')\n",
+    "    return pattern_type.findall(line)\n",
+    "\n",
+    "def show(file_path):\n",
+    "    print(f\"Processing {file_path}\")\n",
+    "\n",
+    "def extract_edge_info(line):\n",
+    "    pattern_src = re.compile(r'subject\\\":{\\\"com.bbn.tc.schema.avro.cdm18.UUID\\\":\\\"(.*?)\\\"}')\n",
+    "    pattern_dst1 = re.compile(r'predicateObject\\\":{\\\"com.bbn.tc.schema.avro.cdm18.UUID\\\":\\\"(.*?)\\\"}')\n",
+    "    pattern_dst2 = re.compile(r'predicateObject2\\\":{\\\"com.bbn.tc.schema.avro.cdm18.UUID\\\":\\\"(.*?)\\\"}')\n",
+    "    pattern_type = re.compile(r'type\\\":\\\"(.*?)\\\"')\n",
+    "    pattern_time = re.compile(r'timestampNanos\\\":(.*?),')\n",
+    "\n",
+    "    edge_type = extract_subject_type(line)[0]\n",
+    "    timestamp = pattern_time.findall(line)[0]\n",
+    "    src_id = pattern_src.findall(line)\n",
+    "\n",
+    "    if len(src_id) == 0:\n",
+    "        return None, None, None, None, None\n",
+    "\n",
+    "    src_id = src_id[0]\n",
+    "    dst_id1 = pattern_dst1.findall(line)\n",
+    "    dst_id2 = pattern_dst2.findall(line)\n",
+    "\n",
+    "    if len(dst_id1) > 0 and dst_id1[0] != 'null':\n",
+    "        dst_id1 = dst_id1[0]\n",
+    "    else:\n",
+    "        dst_id1 = None\n",
+    "\n",
+    "    if len(dst_id2) > 0 and dst_id2[0] != 'null':\n",
+    "        dst_id2 = dst_id2[0]\n",
+    "    else:\n",
+    "        dst_id2 = None\n",
+    "\n",
+    "    return src_id, edge_type, timestamp, dst_id1, dst_id2\n",
+    "\n",
+    "def process_data(file_path):\n",
+    "    id_nodetype_map = {}\n",
+    "    notice_num = 1000000\n",
+    "    for i in range(100):\n",
+    "        now_path = file_path + '.' + str(i)\n",
+    "        if i == 0:\n",
+    "            now_path = file_path\n",
+    "        if not os.path.exists(now_path):\n",
+    "            break\n",
+    "\n",
+    "        with open(now_path, 'r') as f:\n",
+    "            show(now_path)\n",
+    "            cnt = 0\n",
+    "            for line in f:\n",
+    "                cnt += 1\n",
+    "                if cnt % notice_num == 0:\n",
+    "                    print(cnt)\n",
+    "\n",
+    "                if 'com.bbn.tc.schema.avro.cdm18.Event' in line or 'com.bbn.tc.schema.avro.cdm18.Host' in line:\n",
+    "                    continue\n",
+    "\n",
+    "                if 'com.bbn.tc.schema.avro.cdm18.TimeMarker' in line or 'com.bbn.tc.schema.avro.cdm18.StartMarker' in line:\n",
+    "                    continue\n",
+    "\n",
+    "                if 'com.bbn.tc.schema.avro.cdm18.UnitDependency' in line or 'com.bbn.tc.schema.avro.cdm18.EndMarker' in line:\n",
+    "                    continue\n",
+    "\n",
+    "                uuid = extract_uuid(line)[0]\n",
+    "                subject_type = extract_subject_type(line)\n",
+    "\n",
+    "                if len(subject_type) < 1:\n",
+    "                    if 'com.bbn.tc.schema.avro.cdm18.MemoryObject' in line:\n",
+    "                        id_nodetype_map[uuid] = 'MemoryObject'\n",
+    "                        continue\n",
+    "                    if 'com.bbn.tc.schema.avro.cdm18.NetFlowObject' in line:\n",
+    "                        id_nodetype_map[uuid] = 'NetFlowObject'\n",
+    "                        continue\n",
+    "                    if 'com.bbn.tc.schema.avro.cdm18.UnnamedPipeObject' in line:\n",
+    "                        id_nodetype_map[uuid] = 'UnnamedPipeObject'\n",
+    "                        continue\n",
+    "\n",
+    "                id_nodetype_map[uuid] = subject_type[0]\n",
+    "\n",
+    "    return id_nodetype_map\n",
+    "\n",
+    "def process_edges(file_path, id_nodetype_map):\n",
+    "    notice_num = 1000000\n",
+    "    not_in_cnt = 0\n",
+    "\n",
+    "    for i in range(100):\n",
+    "        now_path = file_path + '.' + str(i)\n",
+    "        if i == 0:\n",
+    "            now_path = file_path\n",
+    "        if not os.path.exists(now_path):\n",
+    "            break\n",
+    "\n",
+    "        with open(now_path, 'r') as f, open(now_path+'.txt', 'w') as fw:\n",
+    "            cnt = 0\n",
+    "            for line in f:\n",
+    "                cnt += 1\n",
+    "                if cnt % notice_num == 0:\n",
+    "                    print(cnt)\n",
+    "\n",
+    "                if 'com.bbn.tc.schema.avro.cdm18.Event' in line:\n",
+    "                    src_id, edge_type, timestamp, dst_id1, dst_id2 = extract_edge_info(line)\n",
+    "\n",
+    "                    if src_id is None or src_id not in id_nodetype_map:\n",
+    "                        not_in_cnt += 1\n",
+    "                        continue\n",
+    "\n",
+    "                    src_type = id_nodetype_map[src_id]\n",
+    "\n",
+    "                    if dst_id1 is not None and dst_id1 in id_nodetype_map:\n",
+    "                        dst_type1 = id_nodetype_map[dst_id1]\n",
+    "                        this_edge1 = f\"{src_id}\\t{src_type}\\t{dst_id1}\\t{dst_type1}\\t{edge_type}\\t{timestamp}\\n\"\n",
+    "                        fw.write(this_edge1)\n",
+    "\n",
+    "                    if dst_id2 is not None and dst_id2 in id_nodetype_map:\n",
+    "                        dst_type2 = id_nodetype_map[dst_id2]\n",
+    "                        this_edge2 = f\"{src_id}\\t{src_type}\\t{dst_id2}\\t{dst_type2}\\t{edge_type}\\t{timestamp}\\n\"\n",
+    "                        fw.write(this_edge2)\n",
+    "\n",
+    "def run_data_processing():\n",
+    "    os.system('tar -zxvf ta1-cadets-e3-official.json.tar.gz')\n",
+    "    os.system('tar -zxvf ta1-cadets-e3-official-2.json.tar.gz')\n",
+    "\n",
+    "    path_list = ['ta1-cadets-e3-official.json', 'ta1-cadets-e3-official-2.json']\n",
+    "\n",
+    "    for path in path_list:\n",
+    "        id_nodetype_map = process_data(path)\n",
+    "        process_edges(path, id_nodetype_map)\n",
+    "\n",
+    "    os.system('cp ta1-cadets-e3-official.json.1.txt cadets_train.txt')\n",
+    "    os.system('cp ta1-cadets-e3-official-2.json.txt cadets_test.txt')\n"
+   ],
+   "outputs": [],
+   "execution_count": 5
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "tags": [],
+    "ExecuteTime": {
+     "end_time": "2026-02-02T07:26:32.387799Z",
+     "start_time": "2026-02-02T07:23:26.386815Z"
+    }
+   },
+   "source": [
+    "run_data_processing()"
+   ],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Processing ta1-cadets-e3-official.json\n",
+      "1000000\n",
+      "2000000\n",
+      "3000000\n",
+      "4000000\n",
+      "5000000\n",
+      "Processing ta1-cadets-e3-official.json.1\n",
+      "1000000\n",
+      "2000000\n",
+      "3000000\n",
+      "4000000\n",
+      "5000000\n",
+      "Processing ta1-cadets-e3-official.json.2\n",
+      "1000000\n",
+      "2000000\n",
+      "3000000\n",
+      "1000000\n",
+      "2000000\n",
+      "3000000\n",
+      "4000000\n",
+      "5000000\n",
+      "1000000\n",
+      "2000000\n",
+      "3000000\n",
+      "4000000\n",
+      "5000000\n",
+      "1000000\n",
+      "2000000\n",
+      "3000000\n",
+      "Processing ta1-cadets-e3-official-2.json\n",
+      "1000000\n",
+      "2000000\n",
+      "3000000\n",
+      "4000000\n",
+      "5000000\n",
+      "Processing ta1-cadets-e3-official-2.json.1\n",
+      "1000000\n",
+      "2000000\n",
+      "3000000\n",
+      "1000000\n",
+      "2000000\n",
+      "3000000\n",
+      "4000000\n",
+      "5000000\n",
+      "1000000\n",
+      "2000000\n",
+      "3000000\n"
+     ]
+    }
+   ],
+   "execution_count": 42
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "BfjmrhfUr3pK",
+    "tags": [],
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:23.542876Z",
+     "start_time": "2026-02-03T08:05:23.532692Z"
+    }
+   },
+   "source": [
+    "def add_node_properties(nodes, node_id, properties):\n",
+    "    if node_id not in nodes:\n",
+    "        nodes[node_id] = []\n",
+    "    nodes[node_id].extend(properties)\n",
+    "\n",
+    "def update_edge_index(edges, edge_index, index):\n",
+    "    for src_id, dst_id in edges:\n",
+    "        src = index[src_id]\n",
+    "        dst = index[dst_id]\n",
+    "        edge_index[0].append(src)\n",
+    "        edge_index[1].append(dst)\n",
+    "\n",
+    "def prepare_graph(df):\n",
+    "    nodes, labels, edges = {}, {}, []\n",
+    "    dummies = {'SUBJECT_PROCESS': 0, 'FILE_OBJECT_FILE': 1, 'FILE_OBJECT_UNIX_SOCKET': 2, \n",
+    "               'UnnamedPipeObject': 3, 'NetFlowObject': 4, 'FILE_OBJECT_DIR': 5}\n",
+    "    \n",
+    "    for _, row in df.iterrows():\n",
+    "        action = row[\"action\"]\n",
+    "        properties = [row['exec'], action] + ([row['path']] if row['path'] else [])\n",
+    "        \n",
+    "        actor_id = row[\"actorID\"]\n",
+    "        add_node_properties(nodes, actor_id, properties)\n",
+    "        labels[actor_id] = dummies[row['actor_type']]\n",
+    "\n",
+    "        object_id = row[\"objectID\"]\n",
+    "        add_node_properties(nodes, object_id, properties)\n",
+    "        labels[object_id] = dummies[row['object']]\n",
+    "\n",
+    "        edges.append((actor_id, object_id))\n",
+    "\n",
+    "    features, feat_labels, edge_index, index_map = [], [], [[], []], {}\n",
+    "    for node_id, props in nodes.items():\n",
+    "        features.append(props)\n",
+    "        feat_labels.append(labels[node_id])\n",
+    "        index_map[node_id] = len(features) - 1\n",
+    "\n",
+    "    update_edge_index(edges, edge_index, index_map)\n",
+    "\n",
+    "    return features, feat_labels, edge_index, list(index_map.keys())"
+   ],
+   "outputs": [],
+   "execution_count": 6
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "fmXWs1dKIzD8",
+    "tags": [],
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:27.288047Z",
+     "start_time": "2026-02-03T08:05:27.280047Z"
+    }
+   },
+   "source": [
+    "from torch_geometric.nn import GCNConv\n",
+    "from torch_geometric.nn import SAGEConv, GATConv\n",
+    "import torch.nn.functional as F\n",
+    "import torch.nn as nn\n",
+    "\n",
+    "class GCN(torch.nn.Module):\n",
+    "    def __init__(self,in_channel,out_channel):\n",
+    "        super().__init__()\n",
+    "        self.conv1 = SAGEConv(in_channel, 32, normalize=True)\n",
+    "        self.conv2 = SAGEConv(32, out_channel, normalize=True)\n",
+    "\n",
+    "    def forward(self, x, edge_index):\n",
+    "        x = self.conv1(x, edge_index)\n",
+    "        x = x.relu()\n",
+    "        x = F.dropout(x, p=0.5, training=self.training)\n",
+    "\n",
+    "        x = self.conv2(x, edge_index)\n",
+    "        return F.softmax(x, dim=1)"
+   ],
+   "outputs": [],
+   "execution_count": 7
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "YBuP_tSq94f4",
+    "tags": [],
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:29.245619Z",
+     "start_time": "2026-02-03T08:05:29.234620Z"
+    }
+   },
+   "source": [
+    "def visualize(h, color):\n",
+    "    z = TSNE(n_components=2).fit_transform(h.detach().cpu().numpy())\n",
+    "\n",
+    "    plt.figure(figsize=(10,10))\n",
+    "    plt.xticks([])\n",
+    "    plt.yticks([])\n",
+    "\n",
+    "    plt.scatter(z[:, 0], z[:, 1], s=70, c=color, cmap=\"Set2\")\n",
+    "    plt.show()"
+   ],
+   "outputs": [],
+   "execution_count": 8
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "3PCP6SXwZaif",
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:32.935701Z",
+     "start_time": "2026-02-03T08:05:32.805329Z"
+    }
+   },
+   "source": [
+    "from gensim.models.callbacks import CallbackAny2Vec\n",
+    "import gensim\n",
+    "from gensim.models import Word2Vec\n",
+    "from multiprocessing import Pool\n",
+    "from itertools import compress\n",
+    "from tqdm import tqdm\n",
+    "import time\n",
+    "\n",
+    "class EpochSaver(CallbackAny2Vec):\n",
+    "    '''Callback to save model after each epoch.'''\n",
+    "\n",
+    "    def __init__(self):\n",
+    "        self.epoch = 0\n",
+    "\n",
+    "    def on_epoch_end(self, model):\n",
+    "        model.save('word2vec_cadets_E3.model')\n",
+    "        self.epoch += 1"
+   ],
+   "outputs": [],
+   "execution_count": 9
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "P8oBL8LFaeOf",
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:34.218677Z",
+     "start_time": "2026-02-03T08:05:34.202677Z"
+    }
+   },
+   "source": [
+    "class EpochLogger(CallbackAny2Vec):\n",
+    "    '''Callback to log information about training'''\n",
+    "\n",
+    "    def __init__(self):\n",
+    "        self.epoch = 0\n",
+    "\n",
+    "    def on_epoch_begin(self, model):\n",
+    "        print(\"Epoch #{} start\".format(self.epoch))\n",
+    "\n",
+    "    def on_epoch_end(self, model):\n",
+    "        print(\"Epoch #{} end\".format(self.epoch))\n",
+    "        self.epoch += 1"
+   ],
+   "outputs": [],
+   "execution_count": 10
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "Se7Ei4tAapVj",
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:36.166758Z",
+     "start_time": "2026-02-03T08:05:36.161757Z"
+    }
+   },
+   "source": [
+    "logger = EpochLogger()\n",
+    "saver = EpochSaver()"
+   ],
+   "outputs": [],
+   "execution_count": 11
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:39.047407Z",
+     "start_time": "2026-02-03T08:05:39.027930Z"
+    }
+   },
+   "source": [
+    "def add_attributes(d,p):\n",
+    "    \n",
+    "    f = open(p)\n",
+    "    data = [json.loads(x) for x in f if \"EVENT\" in x]\n",
+    "\n",
+    "    info = []\n",
+    "    for x in data:\n",
+    "        try:\n",
+    "            action = x['datum']['com.bbn.tc.schema.avro.cdm18.Event']['type']\n",
+    "        except:\n",
+    "            action = ''\n",
+    "        try:\n",
+    "            actor = x['datum']['com.bbn.tc.schema.avro.cdm18.Event']['subject']['com.bbn.tc.schema.avro.cdm18.UUID']\n",
+    "        except:\n",
+    "            actor = ''\n",
+    "        try:\n",
+    "            obj = x['datum']['com.bbn.tc.schema.avro.cdm18.Event']['predicateObject']['com.bbn.tc.schema.avro.cdm18.UUID']\n",
+    "        except:\n",
+    "            obj = ''\n",
+    "        try:\n",
+    "            timestamp = x['datum']['com.bbn.tc.schema.avro.cdm18.Event']['timestampNanos']\n",
+    "        except:\n",
+    "            timestamp = ''\n",
+    "        try:\n",
+    "            cmd = x['datum']['com.bbn.tc.schema.avro.cdm18.Event']['properties']['map']['exec']\n",
+    "        except:\n",
+    "            cmd = ''\n",
+    "        try:\n",
+    "            path = x['datum']['com.bbn.tc.schema.avro.cdm18.Event']['predicateObjectPath']['string']\n",
+    "        except:\n",
+    "            path = ''\n",
+    "        try:\n",
+    "            path2 = x['datum']['com.bbn.tc.schema.avro.cdm18.Event']['predicateObject2Path']['string']\n",
+    "        except:\n",
+    "            path2 = ''\n",
+    "        try:\n",
+    "            obj2 = x['datum']['com.bbn.tc.schema.avro.cdm18.Event']['predicateObject2']['com.bbn.tc.schema.avro.cdm18.UUID']\n",
+    "            info.append({'actorID':actor,'objectID':obj2,'action':action,'timestamp':timestamp,'exec':cmd, 'path':path2})\n",
+    "        except:\n",
+    "            pass\n",
+    "\n",
+    "        info.append({'actorID':actor,'objectID':obj,'action':action,'timestamp':timestamp,'exec':cmd, 'path':path})\n",
+    "\n",
+    "    rdf = pd.DataFrame.from_records(info).astype(str)\n",
+    "    d = d.astype(str)\n",
+    "\n",
+    "    return d.merge(rdf,how='inner',on=['actorID','objectID','action','timestamp']).drop_duplicates()"
+   ],
+   "outputs": [],
+   "execution_count": 12
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:40.593216Z",
+     "start_time": "2026-02-03T08:05:40.579710Z"
+    }
+   },
+   "source": [
+    "if Train:\n",
+    "    f = open(\"cadets_train.txt\")\n",
+    "    data = f.read().split('\\n')\n",
+    "    data = [line.split('\\t') for line in data]\n",
+    "    df = pd.DataFrame (data, columns = ['actorID', 'actor_type','objectID','object','action','timestamp'])\n",
+    "    df = df.dropna()\n",
+    "    df.sort_values(by='timestamp', ascending=True,inplace=True)\n",
+    "    df = add_attributes(df,\"ta1-cadets-e3-official.json.1\")\n",
+    "    phrases,labels,edges,mapp = prepare_graph(df)"
+   ],
+   "outputs": [],
+   "execution_count": 13
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "p3TAi69zI1bO",
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:42.811688Z",
+     "start_time": "2026-02-03T08:05:42.649022Z"
+    }
+   },
+   "source": [
+    "from sklearn.utils import class_weight\n",
+    "import torch.nn.functional as F\n",
+    "from torch.nn import CrossEntropyLoss\n",
+    "\n",
+    "model = GCN(30,6).to(device)\n",
+    "optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)"
+   ],
+   "outputs": [],
+   "execution_count": 14
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "3RDmGME5iPb5",
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:43.935614Z",
+     "start_time": "2026-02-03T08:05:43.911992Z"
+    }
+   },
+   "source": [
+    "if Train:\n",
+    "    word2vec = Word2Vec(sentences=phrases, vector_size=30, window=5, min_count=1, workers=8,epochs=300,callbacks=[saver,logger])"
+   ],
+   "outputs": [],
+   "execution_count": 15
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "Vn_pMyt5Jd-6",
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:45.595427Z",
+     "start_time": "2026-02-03T08:05:45.219407Z"
+    }
+   },
+   "source": [
+    "import math\n",
+    "import torch\n",
+    "import numpy as np\n",
+    "from gensim.models import Word2Vec\n",
+    "\n",
+    "class PositionalEncoder:\n",
+    "\n",
+    "    def __init__(self, d_model, max_len=100000):\n",
+    "        position = torch.arange(max_len).unsqueeze(1)\n",
+    "        div_term = torch.exp(torch.arange(0, d_model, 2) * (-math.log(10000.0) / d_model))\n",
+    "        self.pe = torch.zeros(max_len, d_model)\n",
+    "        self.pe[:, 0::2] = torch.sin(position * div_term)\n",
+    "        self.pe[:, 1::2] = torch.cos(position * div_term)\n",
+    "\n",
+    "    def embed(self, x):\n",
+    "        return x + self.pe[:x.size(0)]\n",
+    "\n",
+    "\n",
+    "def infer(document):\n",
+    "    word_embeddings = [w2vmodel.wv[word] for word in document if word in  w2vmodel.wv]\n",
+    "    \n",
+    "    if not word_embeddings:\n",
+    "        return np.zeros(20)\n",
+    "\n",
+    "    output_embedding = torch.tensor(word_embeddings, dtype=torch.float)\n",
+    "    if len(document) < 100000:\n",
+    "        output_embedding = encoder.embed(output_embedding)\n",
+    "\n",
+    "    output_embedding = output_embedding.detach().cpu().numpy()\n",
+    "    return np.mean(output_embedding, axis=0)\n",
+    "\n",
+    "encoder = PositionalEncoder(30)\n",
+    "w2vmodel = Word2Vec.load(\"trained_weights/cadets/word2vec_cadets_E3.model\")"
+   ],
+   "outputs": [],
+   "execution_count": 16
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "colab": {
+     "base_uri": "https://localhost:8080/"
+    },
+    "executionInfo": {
+     "elapsed": 126525,
+     "status": "ok",
+     "timestamp": 1673576225797,
+     "user": {
+      "displayName": "Mati Ur Rehman",
+      "userId": "04281203290774044297"
+     },
+     "user_tz": 300
+    },
+    "id": "Gclj6HVL17lD",
+    "outputId": "4fda4903-b842-4bfb-8316-c8a82bd4cee4",
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:49.723321Z",
+     "start_time": "2026-02-03T08:05:49.714815Z"
+    }
+   },
+   "source": [
+    "from torch_geometric import utils\n",
+    "\n",
+    "if Train:\n",
+    "    l = np.array(labels)\n",
+    "    class_weights = class_weight.compute_class_weight(class_weight = None,classes = np.unique(l),y = l)\n",
+    "    class_weights = torch.tensor(class_weights,dtype=torch.float).to(device)\n",
+    "    criterion = CrossEntropyLoss(weight=class_weights,reduction='mean')\n",
+    "\n",
+    "    nodes = [infer(x) for x in phrases]\n",
+    "    nodes = np.array(nodes)  \n",
+    "\n",
+    "    graph = Data(x=torch.tensor(nodes,dtype=torch.float).to(device),y=torch.tensor(labels,dtype=torch.long).to(device), edge_index=torch.tensor(edges,dtype=torch.long).to(device))\n",
+    "    graph.n_id = torch.arange(graph.num_nodes)\n",
+    "    mask = torch.tensor([True]*graph.num_nodes, dtype=torch.bool)\n",
+    "\n",
+    "    for m_n in range(22):\n",
+    "\n",
+    "      loader = NeighborLoader(graph, num_neighbors=[-1,-1], batch_size=5000,input_nodes=mask)\n",
+    "      total_loss = 0\n",
+    "      for subg in loader:\n",
+    "          model.train()\n",
+    "          optimizer.zero_grad() \n",
+    "          out = model(subg.x, subg.edge_index) \n",
+    "          loss = criterion(out, subg.y) \n",
+    "          loss.backward() \n",
+    "          optimizer.step()      \n",
+    "          total_loss += loss.item() * subg.batch_size\n",
+    "      print(total_loss / mask.sum().item())\n",
+    "\n",
+    "      loader = NeighborLoader(graph, num_neighbors=[-1,-1], batch_size=5000,input_nodes=mask)\n",
+    "      for subg in loader:\n",
+    "          model.eval()\n",
+    "          out = model(subg.x, subg.edge_index)\n",
+    "\n",
+    "          sorted, indices = out.sort(dim=1,descending=True)\n",
+    "          conf = (sorted[:,0] - sorted[:,1]) / sorted[:,0]\n",
+    "          conf = (conf - conf.min()) / conf.max()\n",
+    "\n",
+    "          pred = indices[:,0]\n",
+    "          cond = (pred == subg.y) | (conf >= 0.9)\n",
+    "          mask[subg.n_id[cond]] = False\n",
+    "\n",
+    "      torch.save(model.state_dict(), f'lword2vec_gnn_cadets{m_n}_E3.pth')\n",
+    "      print(f'Model# {m_n}. {mask.sum().item()} nodes still misclassified \\n')"
+   ],
+   "outputs": [],
+   "execution_count": 17
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "vgqyu7E5qPet",
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:05:51.669304Z",
+     "start_time": "2026-02-03T08:05:51.650869Z"
+    }
+   },
+   "source": [
+    "from itertools import compress\n",
+    "from torch_geometric import utils\n",
+    "\n",
+    "def Get_Adjacent(ids, mapp, edges, hops):\n",
+    "    if hops == 0:\n",
+    "        return set()\n",
+    "    \n",
+    "    neighbors = set()\n",
+    "    for edge in zip(edges[0], edges[1]):\n",
+    "        if any(mapp[node] in ids for node in edge):\n",
+    "            neighbors.update(mapp[node] for node in edge)\n",
+    "\n",
+    "    if hops > 1:\n",
+    "        neighbors = neighbors.union(Get_Adjacent(neighbors, mapp, edges, hops - 1))\n",
+    "    \n",
+    "    return neighbors\n",
+    "\n",
+    "def calculate_metrics(TP, FP, FN, TN):\n",
+    "    FPR = FP / (FP + TN) if FP + TN > 0 else 0\n",
+    "    TPR = TP / (TP + FN) if TP + FN > 0 else 0\n",
+    "\n",
+    "    prec = TP / (TP + FP) if TP + FP > 0 else 0\n",
+    "    rec = TP / (TP + FN) if TP + FN > 0 else 0\n",
+    "    fscore = (2 * prec * rec) / (prec + rec) if prec + rec > 0 else 0\n",
+    "\n",
+    "    return prec, rec, fscore, FPR, TPR\n",
+    "\n",
+    "def helper(MP, all_pids, GP, edges, mapp):\n",
+    "    TP = MP.intersection(GP)\n",
+    "    FP = MP - GP\n",
+    "    FN = GP - MP\n",
+    "    TN = all_pids - (GP | MP)\n",
+    "\n",
+    "    two_hop_gp = Get_Adjacent(GP, mapp, edges, 2)\n",
+    "    two_hop_tp = Get_Adjacent(TP, mapp, edges, 2)\n",
+    "    FPL = FP - two_hop_gp\n",
+    "    TPL = TP.union(FN.intersection(two_hop_tp))\n",
+    "    FN = FN - two_hop_tp\n",
+    "\n",
+    "    TP, FP, FN, TN = len(TPL), len(FPL), len(FN), len(TN)\n",
+    "\n",
+    "    prec, rec, fscore, FPR, TPR = calculate_metrics(TP, FP, FN, TN)\n",
+    "    print(f\"True Positives: {TP}, False Positives: {FP}, False Negatives: {FN}\")\n",
+    "    print(f\"Precision: {round(prec, 2)}, Recall: {round(rec, 2)}, Fscore: {round(fscore, 2)}\")\n",
+    "    \n",
+    "    return TPL, FPL"
+   ],
+   "outputs": [],
+   "execution_count": 18
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "id": "OZFrSLVZ29qU",
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:06:05.802449Z",
+     "start_time": "2026-02-03T08:05:55.811883Z"
+    }
+   },
+   "source": [
+    "f = open(\"cadets_test.txt\")\n",
+    "data = f.read().split('\\n')\n",
+    "data = [line.split('\\t') for line in data]\n",
+    "df = pd.DataFrame (data, columns = ['actorID', 'actor_type','objectID','object','action','timestamp'])\n",
+    "df = df.dropna()\n",
+    "df.sort_values(by='timestamp', ascending=True,inplace=True)"
+   ],
+   "outputs": [],
+   "execution_count": 19
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:13:00.697980Z",
+     "start_time": "2026-02-03T08:06:07.417689Z"
+    }
+   },
+   "source": [
+    "df = add_attributes(df,\"ta1-cadets-e3-official-2.json\")"
+   ],
+   "outputs": [],
+   "execution_count": 20
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:14:10.607854Z",
+     "start_time": "2026-02-03T08:13:05.893495Z"
+    }
+   },
+   "source": [
+    "import sys\n",
+    "print(\"当前Python解释器路径：\", sys.executable)\n",
+    "try:\n",
+    "    import numpy\n",
+    "    print(\"numpy版本：\", numpy.__version__)\n",
+    "    print(\"numpy安装路径：\", numpy.__file__)\n",
+    "except ImportError as e:\n",
+    "    print(\"导入numpy失败：\", e)\n",
+    "with open(\"data_files/cadets.json\", \"r\") as json_file:\n",
+    "    GT_mal = set(json.load(json_file))\n",
+    "\n",
+    "data = df\n",
+    "\n",
+    "phrases,labels,edges,mapp = prepare_graph(data)\n",
+    "\n",
+    "nodes = [infer(x) for x in phrases]\n",
+    "nodes = np.array(nodes)  \n",
+    "\n",
+    "all_ids = list(data['actorID']) + list(data['objectID'])\n",
+    "all_ids = set(all_ids)"
+   ],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "当前Python解释器路径： D:\\App\\anaconda\\envs\\Flash\\python.exe\n",
+      "numpy版本�? 1.26.4\n",
+      "numpy安装路径�? D:\\App\\anaconda\\envs\\Flash\\lib\\site-packages\\numpy\\__init__.py\n"
+     ]
+    }
+   ],
+   "execution_count": 21
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "colab": {
+     "base_uri": "https://localhost:8080/"
+    },
+    "executionInfo": {
+     "elapsed": 311255,
+     "status": "ok",
+     "timestamp": 1673577553815,
+     "user": {
+      "displayName": "Mati Ur Rehman",
+      "userId": "04281203290774044297"
+     },
+     "user_tz": 300
+    },
+    "id": "DsLlVS6zpox5",
+    "outputId": "e79153e2-2e54-4cbf-c241-1293e0ee2be6",
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:14:58.423030Z",
+     "start_time": "2026-02-03T08:14:43.529171Z"
+    }
+   },
+   "source": [
+    "graph = Data(x=torch.tensor(nodes,dtype=torch.float).to(device),y=torch.tensor(labels,dtype=torch.long).to(device), edge_index=torch.tensor(edges,dtype=torch.long).to(device))\n",
+    "graph.n_id = torch.arange(graph.num_nodes)\n",
+    "flag = torch.tensor([True]*graph.num_nodes, dtype=torch.bool)\n",
+    "\n",
+    "for m_n in range(22):\n",
+    "  model.load_state_dict(torch.load(f'trained_weights/cadets/lword2vec_gnn_cadets{m_n}_E3.pth'))\n",
+    "  loader = NeighborLoader(graph, num_neighbors=[-1,-1], batch_size=5000)    \n",
+    "  for subg in loader:\n",
+    "      model.eval()\n",
+    "      out = model(subg.x, subg.edge_index)\n",
+    "\n",
+    "      sorted, indices = out.sort(dim=1,descending=True)\n",
+    "      conf = (sorted[:,0] - sorted[:,1]) / sorted[:,0]\n",
+    "      conf = (conf - conf.min()) / conf.max()\n",
+    "    \n",
+    "      pred = indices[:,0]\n",
+    "      cond = (pred == subg.y)\n",
+    "      flag[subg.n_id[cond]] = torch.logical_and(flag[subg.n_id[cond]], torch.tensor([False]*len(flag[subg.n_id[cond]]), dtype=torch.bool))\n",
+    "index = utils.mask_to_index(flag).tolist()\n",
+    "ids = set([mapp[x] for x in index])\n",
+    "_ = helper(set(ids),set(all_ids),GT_mal,edges,mapp) "
+   ],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "True Positives: 12851, False Positives: 1003, False Negatives: 7\n",
+      "Precision: 0.93, Recall: 1.0, Fscore: 0.96\n"
+     ]
+    }
+   ],
+   "execution_count": 22
+  },
+  {
+   "cell_type": "code",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2026-02-03T08:15:10.268814Z",
+     "start_time": "2026-02-03T08:15:10.259867Z"
+    }
+   },
+   "source": [
+    "def traverse(ids, mapping, edges, hops, visited=None):\n",
+    "    if hops == 0:\n",
+    "        return set()\n",
+    "\n",
+    "    if visited is None:\n",
+    "        visited = set()\n",
+    "\n",
+    "    neighbors = set()\n",
+    "    for src, dst in zip(edges[0], edges[1]):\n",
+    "        src_mapped, dst_mapped = mapping[src], mapping[dst]\n",
+    "\n",
+    "        if (src_mapped in ids and dst_mapped not in visited) or \\\n",
+    "           (dst_mapped in ids and src_mapped not in visited):\n",
+    "            neighbors.add(src_mapped)\n",
+    "            neighbors.add(dst_mapped)\n",
+    "\n",
+    "        visited.add(src_mapped)\n",
+    "        visited.add(dst_mapped)\n",
+    "\n",
+    "    neighbors.difference_update(ids) \n",
+    "    return ids.union(traverse(neighbors, mapping, edges, hops - 1, visited))\n",
+    "\n",
+    "def load_data(file_path):\n",
+    "    with open(file_path, 'r') as file:\n",
+    "        return json.load(file)\n",
+    "\n",
+    "def find_connected_alerts(start_alert, mapping, edges, depth, remaining_alerts):\n",
+    "    connected_path = traverse({start_alert}, mapping, edges, depth)\n",
+    "    return connected_path.intersection(remaining_alerts)\n",
+    "\n",
+    "def generate_incident_graphs(alerts, edges, mapping, depth):\n",
+    "    incident_graphs = []\n",
+    "    remaining_alerts = set(alerts)\n",
+    "\n",
+    "    while remaining_alerts:\n",
+    "        alert = remaining_alerts.pop()\n",
+    "        connected_alerts = find_connected_alerts(alert, mapping, edges, depth, remaining_alerts)\n",
+    "\n",
+    "        if len(connected_alerts) > 1:\n",
+    "            incident_graphs.append(connected_alerts)\n",
+    "            remaining_alerts -= connected_alerts\n",
+    "\n",
+    "    return incident_graphs"
+   ],
+   "outputs": [],
+   "execution_count": 23
+  }
+ ],
+ "metadata": {
+  "accelerator": "GPU",
+  "colab": {
+   "provenance": []
+  },
+  "gpuClass": "standard",
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

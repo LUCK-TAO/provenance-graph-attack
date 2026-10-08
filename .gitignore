@@ -1,0 +1,67 @@
+# Local environments and editor state
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
+.agents/
+.codex/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+
+# Datasets and database exports
+**/data/
+**/data_files/
+**/datasets/
+**/Ground_Truth/
+*.dump
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.parquet
+*.feather
+*.tar
+*.tar.gz
+*.zip
+*.7z
+*.rar
+ta1-*
+cadets_train.txt
+cadets_test.txt
+
+# Trained models, embeddings, and generated detector state
+**/artifacts/
+**/trained_weights/
+**/weights/
+**/checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.model
+*.pkl
+*.pickle
+*.npz
+*.npy
+
+# Experiment output and caches
+attack/
+attack_results/
+**/eval_result/
+**/reproduction_results/
+**/nltk_data/
+**/wandb/
+**/runs/
+**/logs/
+*.log
+*.out
+
+# Local release staging
+_github_release/
+

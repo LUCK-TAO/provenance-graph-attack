@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1050" viewBox="0 0 1900 1050" role="img" aria-labelledby="title desc">
+  <title id="title">Macro-action black-box feedback loop</title>
+  <desc id="desc">A hand-drawn circular process diagram showing construction of a macro-action, one black-box detector query, reward computation from four feedback signals, and a policy update that starts the next round.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M1 1 L11 6 L1 11 Q4 6 1 1Z" fill="#24272b"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1 L11 6 L1 11 Q4 6 1 1Z" fill="#2f6fa3"/>
+    </marker>
+    <style>
+      .bg{fill:#fffdf8}.frame{fill:#fffdf8;stroke:#24272b;stroke-width:5}
+      .island{fill:#fff;stroke:#24272b;stroke-width:4;stroke-linejoin:round}.sketch{fill:none;stroke:#24272b;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+      .thin{fill:none;stroke:#24272b;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}.dash{fill:none;stroke:#65717c;stroke-width:2.5;stroke-dasharray:8 8;stroke-linecap:round}
+      .flow{fill:none;stroke:#24272b;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+      .smallFlow{fill:none;stroke:#24272b;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+      .signal{fill:none;stroke:#2f6fa3;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:9 7;marker-end:url(#arrowBlue)}
+      .title{font:700 35px 'Comic Sans MS','Segoe Print',sans-serif;fill:#202328;text-anchor:middle}
+      .stage{font:700 27px 'Comic Sans MS','Segoe Print',sans-serif;fill:#202328;text-anchor:middle}
+      .head{font:700 21px 'Comic Sans MS','Segoe Print',sans-serif;fill:#202328;text-anchor:middle}
+      .text{font:18px 'Comic Sans MS','Segoe Print',sans-serif;fill:#343a40;text-anchor:middle}
+      .small{font:16px 'Comic Sans MS','Segoe Print',sans-serif;fill:#424950;text-anchor:middle}
+      .tiny{font:14px 'Comic Sans MS','Segoe Print',sans-serif;fill:#424950;text-anchor:middle}
+      .left{text-anchor:start}.white{fill:#fff}.num{font:700 21px 'Comic Sans MS','Segoe Print',sans-serif;fill:#fff;text-anchor:middle;dominant-baseline:middle}
+      .coral{fill:#ff8f87}.blue{fill:#74c0fc}.green{fill:#8ce99a}.yellow{fill:#ffe066}.purple{fill:#b197fc}.cream{fill:#fff1bd}.paper{fill:#fff;stroke:#24272b;stroke-width:3}
+      .node{fill:#fff;stroke:#24272b;stroke-width:2.5}.nodeA{fill:#74c0fc;stroke:#24272b;stroke-width:2.5}.nodeB{fill:#8ce99a;stroke:#24272b;stroke-width:2.5}.nodeC{fill:#ffe066;stroke:#24272b;stroke-width:2.5}
+    </style>
+  </defs>
+
+  <rect class="bg" width="1900" height="1050"/>
+  <rect class="frame" x="22" y="20" width="1856" height="1008" rx="35"/>
+  <text class="title" x="950" y="65">Macro-Action Feedback: Edit in Batches, Query Once, Learn from the Outcome</text>
+
+  <!-- broad circular guide: intentionally different from the earlier card-based figures -->
+  <path d="M295 585 C180 405 267 160 535 118 C770 80 915 132 1035 205" class="dash"/>
+  <path d="M1300 172 C1598 205 1745 405 1680 650 C1628 850 1422 932 1190 900" class="dash"/>
+  <path d="M880 932 C620 976 395 873 295 690" class="dash"/>
+
+  <!-- 1. Macro-action island -->
+  <g>
+    <path class="island" fill="#fff8e6" d="M72 130 Q72 105 100 105 L740 105 Q766 107 765 134 L757 577 Q756 606 728 607 L100 607 Q72 606 74 577Z"/>
+    <circle cx="112" cy="146" r="25" class="coral" stroke="#24272b" stroke-width="3"/>
+    <text class="num" x="112" y="147">1</text>
+    <text class="stage" x="420" y="155">Build and Execute One Macro-Action</text>
+
+    <!-- current state tag -->
+    <path d="M298 184 Q298 171 312 172 H530 Q544 172 543 185 L542 229 Q541 242 528 241 H312 Q299 242 299 228Z" class="paper" fill="#e7f5ff"/>
+    <text class="head" x="421" y="213">Current State  S<tspan baseline-shift="sub" font-size="14">t</tspan></text>
+    <path class="smallFlow" d="M421 242 C417 257 416 265 416 279"/>
+
+    <!-- edit film strip -->
+    <path d="M105 288 Q105 270 122 270 H715 Q730 270 729 287 L727 411 Q727 428 711 427 H122 Q105 427 106 410Z" fill="#fff" stroke="#24272b" stroke-width="3"/>
+    <path d="M105 302 H729 M105 396 H728" class="thin"/>
+    <g fill="#ffe8a1" stroke="#24272b" stroke-width="2">
+      <rect x="121" y="277" width="18" height="17" rx="3"/><rect x="155" y="277" width="18" height="17" rx="3"/><rect x="189" y="277" width="18" height="17" rx="3"/>
+      <rect x="223" y="277" width="18" height="17" rx="3"/><rect x="257" y="277" width="18" height="17" rx="3"/><rect x="291" y="277" width="18" height="17" rx="3"/>
+      <rect x="325" y="277" width="18" height="17" rx="3"/><rect x="359" y="277" width="18" height="17" rx="3"/><rect x="393" y="277" width="18" height="17" rx="3"/>
+      <rect x="427" y="277" width="18" height="17" rx="3"/><rect x="461" y="277" width="18" height="17" rx="3"/><rect x="495" y="277" width="18" height="17" rx="3"/>
+      <rect x="529" y="277" width="18" height="17" rx="3"/><rect x="563" y="277" width="18" height="17" rx="3"/><rect x="597" y="277" width="18" height="17" rx="3"/>
+      <rect x="631" y="277" width="18" height="17" rx="3"/><rect x="665" y="277" width="18" height="17" rx="3"/><rect x="699" y="277" width="18" height="17" rx="3"/>
+    </g>
+    <g transform="translate(130 326)">
+      <!-- graph Gt -->
+      <path class="thin" d="M0 44L40 8L82 48M40 8L55 82"/>
+      <circle class="nodeA" cx="0" cy="44" r="9"/><circle class="node" cx="40" cy="8" r="9"/><circle class="nodeB" cx="82" cy="48" r="9"/><circle class="node" cx="55" cy="82" r="9"/>
+      <text class="tiny" x="40" y="111">G<tspan baseline-shift="sub" font-size="11">t</tspan></text>
+      <path class="smallFlow" d="M104 48 C123 35 137 35 156 48"/>
+
+      <!-- edit card 1 with pencil -->
+      <rect x="164" y="3" width="105" height="83" rx="13" fill="#fff1bd" stroke="#24272b" stroke-width="2.5"/>
+      <path d="M194 59L231 22L244 35L207 72L190 76Z" fill="#ff8f87" stroke="#24272b" stroke-width="2.5"/>
+      <path d="M231 22L238 15L251 28L244 35" fill="#74c0fc" stroke="#24272b" stroke-width="2.5"/>
+      <text class="tiny" x="216" y="104">edit 1</text>
+      <path class="smallFlow" d="M279 48 C297 35 311 35 330 48"/>
+
+      <text class="head" x="354" y="55">···</text>
+      <path class="smallFlow" d="M380 48 C396 35 409 35 427 48"/>
+
+      <!-- final edit card -->
+      <rect x="435" y="3" width="105" height="83" rx="13" fill="#e5dbff" stroke="#24272b" stroke-width="2.5"/>
+      <path class="thin" d="M458 50L482 28L514 57M482 28L499 16"/>
+      <circle class="nodeA" cx="458" cy="50" r="7"/><circle class="node" cx="482" cy="28" r="7"/><circle class="nodeB" cx="514" cy="57" r="7"/><circle class="nodeC" cx="499" cy="16" r="7"/>
+      <text class="tiny" x="488" y="104">edit L</text>
+    </g>
+
+    <!-- no-query ribbon -->
+    <path d="M128 470 Q132 448 154 452 L682 452 Q704 451 708 472 L701 548 Q699 566 679 565 L154 565 Q133 565 130 545Z" fill="#fff0f0" stroke="#24272b" stroke-width="3"/>
+    <g transform="translate(168 477)">
+      <path d="M0 23 Q20 0 40 23 Q20 46 0 23Z" fill="#fff" stroke="#24272b" stroke-width="2.3"/>
+      <circle cx="20" cy="23" r="7" fill="#24272b"/>
+      <path d="M-2 48L44 -2" stroke="#e03131" stroke-width="6" stroke-linecap="round"/>
+    </g>
+    <text class="head" x="452" y="494">No Detector Query Between Edits</text>
+    <text class="small" x="452" y="523">All L edits operate on the latest modified graph</text>
+    <text class="small" x="452" y="548">one macro-action • one accumulated outcome</text>
+  </g>
+
+  <!-- rich bridge from macro action to detector -->
+  <path class="flow" d="M766 336 C820 330 834 278 884 270"/>
+  <text class="small" x="823" y="315" transform="rotate(-18 823 315)">submit G<tspan baseline-shift="sub" font-size="12">t</tspan><tspan baseline-shift="super" font-size="11">(L)</tspan></text>
+  <g transform="translate(772 382)">
+    <path d="M0 0H82L100 18L82 36H0L17 18Z" fill="#ffe066" stroke="#24272b" stroke-width="2.5"/>
+    <text class="tiny" x="50" y="23">after L edits</text>
+  </g>
+
+  <!-- 2. Detector island / observation booth -->
+  <g>
+    <path class="island" fill="#eef9ff" d="M883 128 Q884 102 912 103 L1312 110 Q1338 111 1337 138 L1327 497 Q1326 523 1298 524 L914 517 Q887 516 888 489Z"/>
+    <circle cx="925" cy="147" r="25" class="blue" stroke="#24272b" stroke-width="3"/>
+    <text class="num" x="925" y="148">2</text>
+    <text class="stage" x="1110" y="157">Observe Once</text>
+
+    <!-- telescope / radar detector icon -->
+    <g transform="translate(945 196)">
+      <path d="M45 94 A78 78 0 0 1 157 10" fill="#d0ebff" stroke="#24272b" stroke-width="4"/>
+      <path d="M67 94 A56 56 0 0 1 147 34" fill="none" stroke="#2f6fa3" stroke-width="4" stroke-dasharray="8 7"/>
+      <path d="M91 94 A32 32 0 0 1 137 60" fill="none" stroke="#2f6fa3" stroke-width="4"/>
+      <circle cx="102" cy="94" r="16" fill="#ff8f87" stroke="#24272b" stroke-width="3"/>
+      <path d="M102 94L147 34" stroke="#e03131" stroke-width="5" stroke-linecap="round"/>
+      <path d="M28 112H175" class="sketch"/>
+      <path d="M54 112L38 157M151 112L168 157M79 112L74 157M129 112L134 157" class="sketch"/>
+      <rect x="24" y="157" width="151" height="48" rx="13" fill="#fff" stroke="#24272b" stroke-width="3"/>
+      <text class="head" x="100" y="187">Black-Box Detector</text>
+    </g>
+
+    <path d="M932 427 Q932 409 950 409 H1275 Q1295 409 1294 428 L1292 481 Q1292 498 1274 498 H951 Q932 497 933 480Z" fill="#fff" stroke="#24272b" stroke-width="3"/>
+    <circle cx="973" cy="454" r="15" fill="#8ce99a" stroke="#24272b" stroke-width="2.5"/>
+    <path d="M965 454L971 461L983 446" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <text class="head left" x="1000" y="450">Observable Feedback</text>
+    <text class="small left" x="1000" y="477">anomaly scores + alert status</text>
+
+    <path d="M1239 180 Q1265 174 1282 194 L1300 223 Q1311 244 1289 255 L1250 271 Q1226 278 1217 255 L1207 211 Q1200 188 1221 183Z" fill="#ffe066" stroke="#24272b" stroke-width="3"/>
+    <text class="head" x="1254" y="217">1×</text>
+    <text class="tiny" x="1254" y="243">query only</text>
+  </g>
+
+  <!-- observation pulse to reward mixer -->
+  <path class="flow" d="M1328 396 C1388 414 1397 460 1432 500"/>
+  <g transform="translate(1332 418)">
+    <path d="M0 17 C10 1 20 33 30 17 S50 1 60 17" fill="none" stroke="#2f6fa3" stroke-width="4" stroke-linecap="round"/>
+    <text class="tiny" x="30" y="47">feedback</text>
+  </g>
+
+  <!-- 3. Reward island, deliberately radial instead of panel grid -->
+  <g>
+    <path class="island" fill="#f5f0ff" d="M1396 182 Q1398 157 1424 158 L1811 165 Q1835 166 1833 191 L1826 701 Q1826 727 1800 726 L1419 719 Q1393 718 1394 692Z"/>
+    <circle cx="1437" cy="201" r="25" class="purple" stroke="#24272b" stroke-width="3"/>
+    <text class="num" x="1437" y="202">3</text>
+    <text class="stage" x="1622" y="211">Mix the Reward</text>
+
+    <!-- four hand-drawn note cards -->
+    <g>
+      <path d="M1431 262 Q1432 246 1448 247 H1584 Q1601 248 1599 264 L1596 352 Q1595 369 1577 368 L1447 365 Q1430 364 1431 347Z" fill="#d0ebff" stroke="#24272b" stroke-width="3"/>
+      <path d="M1444 247L1462 231L1480 247" fill="#74c0fc" stroke="#24272b" stroke-width="2.5"/>
+      <path d="M1480 322L1505 306L1530 313L1560 279" class="sketch"/>
+      <text class="head" x="1515" y="286">Score Change</text>
+      <text class="tiny" x="1515" y="349">anomaly score reduction</text>
+
+      <path d="M1630 259 Q1630 243 1646 244 L1782 247 Q1799 248 1798 265 L1795 351 Q1794 367 1777 367 L1646 365 Q1629 365 1630 347Z" fill="#d3f9d8" stroke="#24272b" stroke-width="3"/>
+      <path d="M1644 244L1661 228L1680 245" fill="#8ce99a" stroke="#24272b" stroke-width="2.5"/>
+      <path d="M1669 315H1760" class="thin"/>
+      <path d="M1702 283V338" stroke="#e03131" stroke-width="4" stroke-dasharray="6 5"/>
+      <circle cx="1682" cy="326" r="8" fill="#ff8f87" stroke="#24272b" stroke-width="2"/>
+      <circle cx="1734" cy="296" r="8" fill="#8ce99a" stroke="#24272b" stroke-width="2"/>
+      <text class="head" x="1714" y="283">Threshold Crossing</text>
+      <text class="tiny" x="1714" y="349">alert → benign</text>
+
+      <path d="M1429 401 Q1430 384 1447 385 L1582 388 Q1598 388 1597 405 L1595 493 Q1594 510 1576 509 L1445 507 Q1428 506 1429 489Z" fill="#fff1bd" stroke="#24272b" stroke-width="3"/>
+      <path d="M1444 386L1461 370L1479 387" fill="#ffe066" stroke="#24272b" stroke-width="2.5"/>
+      <circle cx="1481" cy="452" r="12" fill="#fff" stroke="#24272b" stroke-width="2.2"/>
+      <circle cx="1518" cy="437" r="12" fill="#74c0fc" stroke="#24272b" stroke-width="2.2"/>
+      <circle cx="1555" cy="461" r="12" fill="#8ce99a" stroke="#24272b" stroke-width="2.2"/>
+      <path class="thin" d="M1493 447L1506 442M1530 443L1543 455"/>
+      <text class="head" x="1513" y="422">Indirect Effect</text>
+      <text class="tiny" x="1513" y="489">additional nodes evaded</text>
+
+      <path d="M1627 399 Q1628 382 1644 383 L1781 386 Q1798 387 1796 404 L1794 492 Q1793 508 1776 507 L1644 505 Q1627 505 1628 487Z" fill="#ffe3e3" stroke="#24272b" stroke-width="3"/>
+      <path d="M1642 383L1660 367L1678 384" fill="#ff8f87" stroke="#24272b" stroke-width="2.5"/>
+      <path d="M1668 441H1755M1681 425L1668 441L1681 457M1742 425L1755 441L1742 457" class="sketch"/>
+      <text class="head" x="1712" y="422">Edit Cost</text>
+      <text class="tiny" x="1712" y="487">penalty for modifications</text>
+    </g>
+
+    <!-- signal strings converge on reward dial -->
+    <path class="signal" d="M1512 369 C1512 520 1552 524 1581 550"/>
+    <path class="signal" d="M1714 369 C1714 512 1662 525 1639 550"/>
+    <path class="signal" d="M1512 510 C1526 540 1548 550 1574 566"/>
+    <path class="signal" d="M1712 508 C1696 540 1672 552 1648 567"/>
+
+    <g transform="translate(1550 535)">
+      <circle cx="62" cy="58" r="59" fill="#fff" stroke="#24272b" stroke-width="4"/>
+      <path d="M22 77 A48 48 0 0 1 104 25" fill="none" stroke="#b197fc" stroke-width="13" stroke-linecap="round"/>
+      <path d="M62 58L99 30" stroke="#e03131" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="62" cy="58" r="9" fill="#24272b"/>
+      <text class="head" x="62" y="111">reward  r<tspan baseline-shift="sub" font-size="13">t</tspan></text>
+    </g>
+  </g>
+
+  <!-- reward to policy: descending curved connector -->
+  <path class="flow" d="M1553 686 C1454 755 1323 788 1195 806"/>
+  <text class="small" x="1384" y="759" transform="rotate(-17 1384 759)">learn from the complete macro-action</text>
+
+  <!-- 4. Policy workbench, visually independent from the three stages -->
+  <g>
+    <path class="island" fill="#effaf1" d="M627 714 Q629 688 657 690 L1168 696 Q1195 697 1194 724 L1189 946 Q1187 974 1159 972 L650 966 Q623 965 625 938Z"/>
+    <circle cx="669" cy="733" r="25" class="green" stroke="#24272b" stroke-width="3"/>
+    <text class="num" x="669" y="734">4</text>
+    <text class="stage" x="910" y="743">Update the Action Policy</text>
+
+    <!-- gear -->
+    <g transform="translate(704 786)">
+      <path d="M58 0L69 18L90 14L93 36L113 44L103 64L116 81L98 95L101 117L79 120L68 139L48 130L30 142L17 124L-4 126L-8 104L-27 96L-17 76L-30 59L-12 45L-15 23L7 20L18 1L38 10Z" fill="#8ce99a" stroke="#24272b" stroke-width="3"/>
+      <circle cx="43" cy="70" r="35" fill="#fff" stroke="#24272b" stroke-width="3"/>
+      <circle cx="43" cy="70" r="14" fill="#ffe066" stroke="#24272b" stroke-width="3"/>
+    </g>
+
+    <!-- policy sliders -->
+    <g transform="translate(865 793)">
+      <rect x="0" y="0" width="258" height="131" rx="18" fill="#fff" stroke="#24272b" stroke-width="3"/>
+      <text class="head" x="129" y="30">Action-Selection Policy</text>
+      <path class="thin" d="M34 58H224M34 84H224M34 109H224"/>
+      <circle cx="91" cy="58" r="11" fill="#74c0fc" stroke="#24272b" stroke-width="2.5"/>
+      <circle cx="173" cy="84" r="11" fill="#ff8f87" stroke="#24272b" stroke-width="2.5"/>
+      <circle cx="126" cy="109" r="11" fill="#ffe066" stroke="#24272b" stroke-width="2.5"/>
+    </g>
+    <path class="smallFlow" d="M821 856H850"/>
+
+    <path d="M713 928 Q713 914 727 914 H1079 Q1094 914 1093 929 L1091 953 H714Z" fill="#d0ebff" stroke="#24272b" stroke-width="3"/>
+    <text class="head" x="903" y="944">Next State  S<tspan baseline-shift="sub" font-size="13">t+1</tspan>  + updated policy</text>
+  </g>
+
+  <!-- large feedback return: a visibly meaningful loop, not a plain arrow -->
+  <path class="flow" d="M626 887 C483 887 344 838 252 745 C205 697 190 649 210 609"/>
+  <g transform="translate(307 775)">
+    <path d="M0 0 C23 -16 48 -16 71 0 C48 17 23 17 0 0Z" fill="#d3f9d8" stroke="#24272b" stroke-width="2.5"/>
+    <path d="M71 0H137" class="thin"/>
+    <circle cx="158" cy="0" r="19" fill="#74c0fc" stroke="#24272b" stroke-width="2.5"/>
+    <path d="M150 0L156 7L168 -8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <text class="small" x="79" y="42">continue with the latest graph</text>
+  </g>
+  <path d="M187 631 Q181 613 196 602 Q211 591 228 601" fill="none" stroke="#e03131" stroke-width="5" stroke-linecap="round"/>
+  <text class="small left" x="94" y="676">next round</text>
+
+  <!-- compact legend -->
+  <g transform="translate(87 922)">
+    <path d="M0 0H445" class="dash"/>
+    <text class="tiny left" x="0" y="27">Solid path: execution flow</text>
+    <path d="M181 20H238" class="thin" marker-end="url(#arrow)"/>
+    <text class="tiny left" x="260" y="27">Blue dashed path: reward evidence</text>
+  </g>
+</svg>

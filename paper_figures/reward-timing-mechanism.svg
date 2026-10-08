@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="700" viewBox="0 0 1900 700" role="img" aria-labelledby="title desc">
+  <title id="title">Macro-action reward timing and feedback mechanism</title>
+  <desc id="desc">The policy forms a macro-action from multiple primitive edits without querying between edits. The detector is queried once after the macro-action, and observable feedback is used to compute reward and update the policy.</desc>
+  <defs>
+    <style>
+      .bg{fill:#fff}.group{fill:#fff;stroke:#111;stroke-width:2;stroke-dasharray:8 6}.panel{fill:#fff;stroke:#555;stroke-width:1.6}.head{fill:#e8e8e8;stroke:#555;stroke-width:1.5}.soft{fill:#f3f3f3;stroke:#666;stroke-width:1.4}.stage{font:700 25px Georgia,'Times New Roman',serif;fill:#111}.h{font:700 18px Georgia,'Times New Roman',serif;fill:#111}.t{font:16px Georgia,'Times New Roman',serif;fill:#111}.s{font:14px Georgia,'Times New Roman',serif;fill:#111}.math{font:italic 18px Georgia,'Times New Roman',serif;fill:#111}.center{text-anchor:middle}.muted{fill:#555}.circle{fill:#333;stroke:#111;stroke-width:2}.num{font:700 25px Arial,sans-serif;fill:#fff;text-anchor:middle;dominant-baseline:middle}.flow{fill:none;stroke:#111;stroke-width:3;marker-end:url(#arrow)}.subflow{fill:none;stroke:#111;stroke-width:2.3;marker-end:url(#arrowBlue)}.merge{fill:none;stroke:#111;stroke-width:2.3}.feedback{fill:none;stroke:#111;stroke-width:2.4;stroke-dasharray:7 5;marker-end:url(#arrowBlue)}.line{fill:none;stroke:#111;stroke-width:2}.dashline{fill:none;stroke:#555;stroke-width:1.7;stroke-dasharray:6 5}.pill{fill:#f3f3f3;stroke:#555;stroke-width:1.5}.state{fill:#f3f3f3;stroke:#555;stroke-width:1.6}.edit{fill:#fff;stroke:#555;stroke-width:1.6}.query{fill:#f3f3f3;stroke:#111;stroke-width:1.8}.score{fill:#d9d9d9;stroke:#111;stroke-width:1.5}.cross{fill:#f3f3f3;stroke:#111;stroke-width:1.5}.indirect{fill:#c2c2c2;stroke:#111;stroke-width:1.5}.cost{fill:#e8e8e8;stroke:#111;stroke-width:1.5;stroke-dasharray:5 3}.reward{fill:#444;stroke:#111;stroke-width:1.8}.white{fill:#fff}.node{fill:#fff;stroke:#111;stroke-width:1.8}.blue{fill:#888;stroke:#111;stroke-width:1.8}.green{fill:#b5b5b5;stroke:#111;stroke-width:1.8}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#111"/></marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#111"/></marker>
+  </defs>
+
+  <rect class="bg" width="1900" height="700"/>
+
+  <!-- Stage 1: construct and execute macro-action -->
+  <g transform="translate(30 30)">
+    <rect class="group" width="650" height="580" rx="22"/>
+    <circle class="circle" cx="42" cy="42" r="25"/><text class="num" x="42" y="43">1</text>
+    <text class="stage" x="84" y="51">Macro-Action Construction and Execution</text>
+
+    <rect class="state" x="245" y="92" width="160" height="52" rx="13"/>
+    <text class="h center" x="325" y="124">Current State S<tspan baseline-shift="sub" font-size="12">t</tspan></text>
+    <path class="subflow" d="M325 144V177"/>
+
+    <rect class="panel" x="32" y="180" width="586" height="248" rx="13"/>
+    <rect class="head" x="32" y="180" width="586" height="40" rx="13"/>
+    <text class="h center" x="325" y="207">Macro-Action: L Primitive Graph Edits</text>
+
+    <g transform="translate(64 251)">
+      <rect class="edit" x="0" y="0" width="116" height="74" rx="10"/>
+      <text class="math center" x="58" y="32">e<tspan baseline-shift="sub" font-size="12">t</tspan><tspan baseline-shift="super" font-size="12">(1)</tspan></text>
+      <text class="s center muted" x="58" y="57">primitive edit</text>
+      <path class="flow" d="M116 37H151"/>
+
+      <rect class="edit" x="153" y="0" width="116" height="74" rx="10"/>
+      <text class="math center" x="211" y="32">e<tspan baseline-shift="sub" font-size="12">t</tspan><tspan baseline-shift="super" font-size="12">(2)</tspan></text>
+      <text class="s center muted" x="211" y="57">primitive edit</text>
+      <text class="h center" x="307" y="43">···</text>
+      <path class="flow" d="M350 37H383"/>
+
+      <rect class="edit" x="385" y="0" width="116" height="74" rx="10"/>
+      <text class="math center" x="443" y="32">e<tspan baseline-shift="sub" font-size="12">t</tspan><tspan baseline-shift="super" font-size="12">(L)</tspan></text>
+      <text class="s center muted" x="443" y="57">primitive edit</text>
+    </g>
+
+    <g transform="translate(118 348)">
+      <circle class="node" cx="12" cy="22" r="9"/><circle class="blue" cx="48" cy="5" r="9"/><circle class="node" cx="82" cy="25" r="9"/><path class="line" d="M20 18L40 9M56 10L74 21"/>
+      <text class="math center" x="48" y="58">G<tspan baseline-shift="sub" font-size="11">t</tspan></text>
+      <path class="flow" d="M100 22H146"/>
+      <circle class="node" cx="170" cy="22" r="9"/><circle class="blue" cx="206" cy="5" r="9"/><circle class="green" cx="240" cy="25" r="9"/><path class="line" d="M178 18L198 9M214 10L232 21"/>
+      <text class="math center" x="206" y="58">G<tspan baseline-shift="sub" font-size="11">t</tspan><tspan baseline-shift="super" font-size="10">(1)</tspan></text>
+      <text class="h center muted" x="283" y="29">···</text>
+      <path class="flow" d="M310 22H348"/>
+      <circle class="node" cx="372" cy="22" r="9"/><circle class="blue" cx="408" cy="5" r="9"/><circle class="green" cx="442" cy="25" r="9"/><path class="line" d="M380 18L400 9M416 10L434 21M372 22L442 25"/>
+      <text class="math center" x="408" y="58">G<tspan baseline-shift="sub" font-size="11">t</tspan><tspan baseline-shift="super" font-size="10">(L)</tspan></text>
+    </g>
+
+    <rect class="soft" x="88" y="458" width="474" height="68" rx="12"/>
+    <text class="h center" x="325" y="486">No Detector Query Between Primitive Edits</text>
+    <text class="s center muted" x="325" y="511">All L edits are applied to the latest modified graph</text>
+  </g>
+
+  <path class="flow" d="M680 320H745"/>
+
+  <!-- Stage 2: one detector query -->
+  <g transform="translate(745 30)">
+    <rect class="group" width="430" height="580" rx="22"/>
+    <circle class="circle" cx="42" cy="42" r="25"/><text class="num" x="42" y="43">2</text>
+    <text class="stage" x="84" y="51">Single Detector Query</text>
+
+    <rect class="state" x="112" y="104" width="206" height="55" rx="13"/>
+    <text class="h center" x="215" y="137">Modified Graph G<tspan baseline-shift="sub" font-size="12">t</tspan><tspan baseline-shift="super" font-size="12">(L)</tspan></text>
+    <path class="subflow" d="M215 159V205"/>
+
+    <rect class="query" x="64" y="208" width="302" height="142" rx="18"/>
+    <circle cx="215" cy="254" r="24" fill="#111"/><circle cx="215" cy="254" r="30" fill="none" stroke="#555" stroke-width="3"/>
+    <text class="h center" x="215" y="307">Black-Box Detector</text>
+    <text class="s center muted" x="215" y="331">query once per macro-action</text>
+
+    <path class="subflow" d="M215 350V394"/>
+    <rect class="panel" x="66" y="396" width="298" height="105" rx="12"/>
+    <rect class="head" x="66" y="396" width="298" height="38" rx="12"/>
+    <text class="h center" x="215" y="422">Observable Feedback</text>
+    <text class="s center" x="215" y="458">anomaly scores + alert status</text>
+    <text class="s center muted" x="215" y="484">query count +1</text>
+
+    <rect class="pill" x="122" y="526" width="186" height="32" rx="16"/>
+    <text class="h center" x="215" y="548">One Query Only</text>
+  </g>
+
+  <path class="flow" d="M1175 320H1235"/>
+
+  <!-- Stage 3: reward and update -->
+  <g transform="translate(1235 30)">
+    <rect class="group" width="635" height="580" rx="22"/>
+    <circle class="circle" cx="42" cy="42" r="25"/><text class="num" x="42" y="43">3</text>
+    <text class="stage" x="84" y="51">Reward Computation and Policy Update</text>
+
+    <rect class="score" x="34" y="100" width="264" height="84" rx="12"/>
+    <text class="h center" x="166" y="130">Score Change</text>
+    <text class="s center" x="166" y="158">reduction in anomaly score</text>
+    <rect class="cross" x="337" y="100" width="264" height="84" rx="12"/>
+    <text class="h center" x="469" y="130">Threshold Crossing</text>
+    <text class="s center" x="469" y="158">alert → benign</text>
+
+    <rect class="indirect" x="34" y="205" width="264" height="84" rx="12"/>
+    <text class="h center" x="166" y="235">Indirect Effect</text>
+    <text class="s center" x="166" y="263">additional nodes evaded</text>
+    <rect class="cost" x="337" y="205" width="264" height="84" rx="12"/>
+    <text class="h center" x="469" y="235">Edit Cost</text>
+    <text class="s center" x="469" y="263">penalty for graph modifications</text>
+
+    <path class="merge" d="M298 142H317M337 142H317M298 247H317M337 247H317"/>
+    <path class="subflow" d="M317 142V302"/>
+    <rect class="reward" x="270" y="304" width="95" height="58" rx="14"/>
+    <text class="h white center" x="317" y="329">Reward</text>
+    <text class="math white center" x="317" y="350">r<tspan baseline-shift="sub" font-size="11">t</tspan></text>
+
+    <path class="subflow" d="M317 362V397"/>
+    <rect class="panel" x="120" y="400" width="395" height="72" rx="12"/>
+    <text class="h center" x="317" y="429">Update Action-Selection Policy</text>
+    <text class="s center muted" x="317" y="454">learn from the macro-action outcome</text>
+
+    <path class="subflow" d="M317 472V505"/>
+    <rect class="state" x="220" y="508" width="195" height="52" rx="13"/>
+    <text class="h center" x="317" y="540">Next State S<tspan baseline-shift="sub" font-size="12">t+1</tspan></text>
+  </g>
+
+  <!-- feedback loop to next macro-action -->
+  <path class="feedback" d="M1552 610V642Q1552 658 1536 658H356Q340 658 340 642V611"/>
+  <text class="s muted center" x="946" y="682">Continue with the updated policy and latest modified graph</text>
+</svg>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="620" viewBox="0 0 1800 620" role="img" aria-labelledby="title desc">
+  <title id="title">Semantic-constrained candidate node construction</title>
+  <desc id="desc">A target alert node determines a valid action set. Local two-hop and graph-wide benign nodes are filtered by semantic constraints to construct the candidate pool and action mask.</desc>
+  <defs>
+    <style>
+      .bg{fill:#fff}.group{fill:#fff;stroke:#111;stroke-width:2;stroke-dasharray:8 6}.panel{fill:#fff;stroke:#555;stroke-width:1.6}.head{fill:#e8e8e8;stroke:#555;stroke-width:1.5}.soft{fill:#f3f3f3;stroke:#666;stroke-width:1.4}.stage{font:700 25px Georgia,'Times New Roman',serif;fill:#111}.h{font:700 18px Georgia,'Times New Roman',serif;fill:#111}.t{font:16px Georgia,'Times New Roman',serif;fill:#111}.s{font:14px Georgia,'Times New Roman',serif;fill:#111}.mono{font:14px Consolas,'Courier New',monospace;fill:#111}.center{text-anchor:middle}.muted{fill:#555}.circle{fill:#333;stroke:#111;stroke-width:2}.num{font:700 25px Arial,sans-serif;fill:#fff;text-anchor:middle;dominant-baseline:middle}.flow{fill:none;stroke:#111;stroke-width:3;marker-end:url(#arrow)}.subflow{fill:none;stroke:#111;stroke-width:2.3;marker-end:url(#arrowBlue)}.relation{fill:none;stroke:#333;stroke-width:1.8;marker-end:url(#arrowMini)}.line{fill:none;stroke:#111;stroke-width:2}.dash{fill:none;stroke:#555;stroke-width:1.8;stroke-dasharray:6 5}.target{fill:#fff;stroke:#111;stroke-width:4}.process{fill:#fff;stroke:#111;stroke-width:1.8}.file{fill:#b5b5b5;stroke:#111;stroke-width:1.8}.network{fill:#dedede;stroke:#111;stroke-width:1.8;stroke-dasharray:3 2}.candidate{fill:#777;stroke:#111;stroke-width:1.8}.ok{fill:#555;stroke:#111;stroke-width:1.5}.pill{fill:#f3f3f3;stroke:#555;stroke-width:1.5}.maskOn{fill:#555;stroke:#111;stroke-width:1}.maskOff{fill:#f3f3f3;stroke:#888;stroke-width:1}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#111"/></marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#111"/></marker>
+    <marker id="arrowMini" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#333"/></marker>
+  </defs>
+
+  <rect class="bg" width="1800" height="620"/>
+
+  <!-- Stage 1: target selection -->
+  <g transform="translate(35 30)">
+    <rect class="group" width="500" height="550" rx="22"/>
+    <circle class="circle" cx="42" cy="42" r="25"/><text class="num" x="42" y="43">1</text>
+    <text class="stage" x="84" y="51">Target Alert Node</text>
+
+    <rect class="panel" x="26" y="92" width="448" height="108" rx="12"/>
+    <rect class="head" x="26" y="92" width="448" height="38" rx="12"/>
+    <text class="h center" x="250" y="118">Black-Box Alert Ranking</text>
+    <text class="s center" x="250" y="153">Observable anomaly scores and alert status</text>
+    <rect class="pill" x="188" y="164" width="124" height="28" rx="14"/>
+    <text class="s center" x="250" y="183">Select Top-K</text>
+
+    <rect class="soft" x="48" y="218" width="404" height="258" rx="14"/>
+    <text class="h center" x="250" y="248">Selected Target and Local Context</text>
+    <g transform="translate(93 275)">
+      <path class="line" d="M40 65L135 23L222 72L306 30M135 23L166 137M222 72L166 137M222 72L294 132"/>
+      <circle class="process" cx="40" cy="65" r="18"/><text class="s center" x="40" y="70">P</text>
+      <circle class="file" cx="135" cy="23" r="18"/><text class="s center" x="135" y="28">F</text>
+      <circle class="target" cx="222" cy="72" r="23"/><text class="h center" x="222" y="79">v<tspan baseline-shift="sub" font-size="12">t</tspan></text>
+      <circle class="network" cx="306" cy="30" r="18"/><text class="s center" x="306" y="35">N</text>
+      <circle class="process" cx="166" cy="137" r="18"/><text class="s center" x="166" y="142">P</text>
+      <circle class="file" cx="294" cy="132" r="18"/><text class="s center" x="294" y="137">F</text>
+      <path class="dash" d="M222 72m-51 0a51 51 0 1 0 102 0a51 51 0 1 0-102 0"/>
+    </g>
+    <rect class="pill" x="148" y="438" width="204" height="30" rx="15"/>
+    <text class="s center" x="250" y="458">Target node v<tspan baseline-shift="sub" font-size="11">t</tspan> and node type</text>
+  </g>
+
+  <path class="flow" d="M535 305H650"/>
+  <text class="s muted center" x="592" y="287">target type</text>
+
+  <!-- Stage 2: action filtering -->
+  <g transform="translate(650 30)">
+    <rect class="group" width="500" height="550" rx="22"/>
+    <circle class="circle" cx="42" cy="42" r="25"/><text class="num" x="42" y="43">2</text>
+    <text class="stage" x="84" y="51">Semantic Action Filtering</text>
+
+    <rect class="panel" x="28" y="92" width="444" height="385" rx="13"/>
+    <rect class="head" x="28" y="92" width="444" height="40" rx="13"/>
+    <text class="h center" x="250" y="119">Valid Actions for Target v<tspan baseline-shift="sub" font-size="12">t</tspan></text>
+
+    <rect class="soft" x="55" y="158" width="390" height="70" rx="10"/>
+    <circle class="ok" cx="82" cy="193" r="13"/><path d="M75 193L80 198L89 187" fill="none" stroke="#fff" stroke-width="3"/>
+    <text class="h" x="107" y="187">READ</text><text class="s" x="107" y="210">Process → File</text>
+    <circle class="process" cx="352" cy="193" r="15"/><path class="relation" d="M369 193H402"/><circle class="file" cx="420" cy="193" r="15"/>
+
+    <rect class="soft" x="55" y="246" width="390" height="70" rx="10"/>
+    <circle class="ok" cx="82" cy="281" r="13"/><path d="M75 281L80 286L89 275" fill="none" stroke="#fff" stroke-width="3"/>
+    <text class="h" x="107" y="275">WRITE</text><text class="s" x="107" y="298">Process → File</text>
+    <circle class="process" cx="352" cy="281" r="15"/><path class="relation" d="M369 281H402"/><circle class="file" cx="420" cy="281" r="15"/>
+
+    <rect class="soft" x="55" y="334" width="390" height="70" rx="10"/>
+    <circle class="ok" cx="82" cy="369" r="13"/><path d="M75 369L80 374L89 363" fill="none" stroke="#fff" stroke-width="3"/>
+    <text class="h" x="107" y="363">SENDMSG</text><text class="s" x="107" y="386">Process → NetFlow</text>
+    <circle class="process" cx="352" cy="369" r="15"/><path class="relation" d="M369 369H402"/><circle class="network" cx="420" cy="369" r="15"/>
+
+    <text class="s muted center" x="250" y="438">Node type · Edge type · Direction</text>
+    <rect class="pill" x="137" y="496" width="226" height="32" rx="16"/>
+    <text class="h center" x="250" y="518">Valid Action Set A(v<tspan baseline-shift="sub" font-size="12">t</tspan>)</text>
+  </g>
+
+  <path class="flow" d="M1150 305H1265"/>
+  <text class="s muted center" x="1207" y="287">semantic schema</text>
+
+  <!-- Stage 3: candidate construction -->
+  <g transform="translate(1265 30)">
+    <rect class="group" width="500" height="550" rx="22"/>
+    <circle class="circle" cx="42" cy="42" r="25"/><text class="num" x="42" y="43">3</text>
+    <text class="stage" x="84" y="51" style="font-size:22px">Candidate Pool and Action Mask</text>
+
+    <rect class="soft" x="28" y="94" width="205" height="130" rx="12"/>
+    <rect class="head" x="28" y="94" width="205" height="36" rx="12"/>
+    <text class="h center" x="130" y="119">Local Candidates</text>
+    <text class="s center muted" x="130" y="150">Two-hop neighborhood</text>
+    <g transform="translate(62 165)"><path class="line" d="M10 25L52 5L94 28L132 5"/><circle class="process" cx="10" cy="25" r="10"/><circle class="candidate" cx="52" cy="5" r="10"/><circle class="file" cx="94" cy="28" r="10"/><circle class="network" cx="132" cy="5" r="10"/></g>
+
+    <rect class="soft" x="267" y="94" width="205" height="130" rx="12"/>
+    <rect class="head" x="267" y="94" width="205" height="36" rx="12"/>
+    <text class="h center" x="369" y="119">Global Candidates</text>
+    <text class="s center muted" x="369" y="150">Graph-wide benign nodes</text>
+    <g transform="translate(309 170)"><circle class="file" cx="15" cy="10" r="11"/><circle class="process" cx="55" cy="10" r="11"/><circle class="network" cx="95" cy="10" r="11"/><circle class="candidate" cx="135" cy="10" r="11"/></g>
+
+    <path class="subflow" d="M130 224V254"/><path class="subflow" d="M369 224V254"/>
+    <rect class="panel" x="92" y="256" width="316" height="62" rx="11"/>
+    <text class="h center" x="250" y="282">Semantic Compatibility Filter</text>
+    <text class="s center muted" x="250" y="304">type · relation · direction · availability</text>
+
+    <path class="subflow" d="M250 318V347"/>
+    <rect class="pill" x="113" y="348" width="274" height="52" rx="14"/>
+    <text class="h center" x="250" y="370">Candidate-Node Pool C(v<tspan baseline-shift="sub" font-size="12">t</tspan>, a)</text>
+    <text class="s center muted" x="250" y="390">valid local nodes + benign supplements</text>
+
+    <path class="subflow" d="M250 400V426"/>
+    <rect class="panel" x="92" y="428" width="316" height="92" rx="11"/>
+    <text class="h" x="116" y="458">Action Mask</text>
+    <text class="s muted" x="116" y="484">valid target–action pairs</text>
+    <text class="s muted" x="116" y="506">1 = selectable, 0 = masked</text>
+    <g transform="translate(321 447)">
+      <rect class="maskOn" x="0" y="0" width="20" height="20"/><rect class="maskOff" x="24" y="0" width="20" height="20"/><rect class="maskOn" x="48" y="0" width="20" height="20"/>
+      <rect class="maskOff" x="0" y="24" width="20" height="20"/><rect class="maskOn" x="24" y="24" width="20" height="20"/><rect class="maskOn" x="48" y="24" width="20" height="20"/>
+    </g>
+  </g>
+</svg>

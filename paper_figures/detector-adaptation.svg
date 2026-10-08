@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="510" viewBox="0 0 1800 510" role="img" aria-labelledby="title desc">
+  <title id="title">Simplified detector adaptation process</title>
+  <desc id="desc">A provenance graph is converted and queried through a detector-specific adapter. The adapter exposes unified anomaly scores, alerted nodes, and a threshold to detector-independent attack logic.</desc>
+  <defs>
+    <style>
+      .bg{fill:#fff}.group{fill:#fff;stroke:#111;stroke-width:2;stroke-dasharray:8 6}.panel{fill:#fff;stroke:#555;stroke-width:1.6}.head{fill:#e8e8e8;stroke:#555;stroke-width:1.5}.soft{fill:#f3f3f3;stroke:#666;stroke-width:1.5}.stage{font:700 25px Georgia,'Times New Roman',serif;fill:#111}.h{font:700 18px Georgia,'Times New Roman',serif;fill:#111}.t{font:16px Georgia,'Times New Roman',serif;fill:#111}.s{font:14px Georgia,'Times New Roman',serif;fill:#111}.mono{font:14px Consolas,'Courier New',monospace;fill:#111}.center{text-anchor:middle}.muted{fill:#555}.circle{fill:#333;stroke:#111;stroke-width:2}.num{font:700 25px Arial,sans-serif;fill:#fff;text-anchor:middle;dominant-baseline:middle}.node{fill:#fff;stroke:#111;stroke-width:2}.marked{fill:#888;stroke:#111;stroke-width:1.8}.line{fill:none;stroke:#111;stroke-width:2}.flow{fill:none;stroke:#111;stroke-width:3;marker-end:url(#arrow)}.feedback{fill:none;stroke:#111;stroke-width:2.3;stroke-dasharray:7 5;marker-end:url(#arrow)}.pill{fill:#f3f3f3;stroke:#555;stroke-width:1.4}.specific{fill:#ededed;stroke:#333;stroke-width:1.7}.check{fill:#555;stroke:#111;stroke-width:1.3}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#111"/></marker>
+  </defs>
+
+  <rect class="bg" width="1800" height="510"/>
+
+  <!-- 1. provenance graph -->
+  <g transform="translate(25 30)">
+    <rect class="group" width="300" height="450" rx="22"/>
+    <circle class="circle" cx="42" cy="42" r="25"/><text class="num" x="42" y="43">1</text>
+    <text class="stage" x="84" y="51">Graph Input</text>
+
+    <rect class="panel" x="24" y="94" width="252" height="278" rx="12"/>
+    <rect class="head" x="24" y="94" width="252" height="40" rx="12"/>
+    <text class="h center" x="150" y="121">Provenance Graph</text>
+    <g transform="translate(45 165)">
+      <path class="line" d="M18 78L73 34L126 72L174 22M73 34L94 124L151 112M126 72L151 112L202 77"/>
+      <circle class="marked" cx="18" cy="78" r="11"/><circle class="node" cx="73" cy="34" r="11"/><circle class="marked" cx="126" cy="72" r="11"/><circle class="node" cx="174" cy="22" r="11"/><circle class="node" cx="94" cy="124" r="11"/><circle class="marked" cx="151" cy="112" r="11"/><circle class="node" cx="202" cy="77" r="11"/>
+    </g>
+    <text class="t center" x="150" y="335">Original or Modified G<tspan baseline-shift="sub" font-size="12">t</tspan></text>
+
+    <rect class="pill" x="64" y="394" width="172" height="34" rx="17"/>
+    <text class="s center" x="150" y="416">node and edge attributes</text>
+  </g>
+
+  <path class="flow" d="M325 255H385"/>
+
+  <!-- 2. detector-specific adapter -->
+  <g transform="translate(385 30)">
+    <rect class="group" width="610" height="450" rx="22"/>
+    <circle class="circle" cx="42" cy="42" r="25"/><text class="num" x="42" y="43">2</text>
+    <text class="stage" x="84" y="51">Detector Adapter</text>
+
+    <rect class="specific" x="28" y="92" width="554" height="230" rx="14"/>
+    <rect class="head" x="28" y="92" width="554" height="42" rx="14"/>
+    <text class="h center" x="305" y="120">Detector-Specific Implementation</text>
+
+    <rect class="panel" x="52" y="166" width="142" height="104" rx="10"/>
+    <text class="h center" x="123" y="203">Graph</text><text class="h center" x="123" y="226">Conversion</text>
+    <text class="s center muted" x="123" y="252">native input</text>
+
+    <path class="flow" d="M194 218H230"/>
+    <rect class="panel" x="232" y="166" width="142" height="104" rx="10"/>
+    <text class="h center" x="303" y="203">Native</text><text class="h center" x="303" y="226">Query</text>
+    <text class="s center muted" x="303" y="252">detector inference</text>
+
+    <path class="flow" d="M374 218H410"/>
+    <rect class="panel" x="412" y="166" width="142" height="104" rx="10"/>
+    <text class="h center" x="483" y="203">Output</text><text class="h center" x="483" y="226">Mapping</text>
+    <text class="s center muted" x="483" y="252">unified semantics</text>
+
+    <rect class="soft" x="96" y="358" width="418" height="48" rx="12"/>
+    <text class="s center" x="305" y="388">Only this module changes when adapting a detector</text>
+  </g>
+
+  <path class="flow" d="M995 255H1055"/>
+
+  <!-- 3. unified interface -->
+  <g transform="translate(1055 30)">
+    <rect class="group" width="330" height="450" rx="22"/>
+    <circle class="circle" cx="42" cy="42" r="25"/><text class="num" x="42" y="43">3</text>
+    <text class="stage" x="84" y="41">Unified Black-Box</text><text class="stage" x="84" y="69">Interface</text>
+
+    <rect class="panel" x="26" y="96" width="278" height="300" rx="12"/>
+    <rect class="head" x="26" y="96" width="278" height="42" rx="12"/>
+    <text class="h center" x="165" y="124">query(graph, nodes)</text>
+
+    <rect class="soft" x="56" y="166" width="218" height="52" rx="9"/>
+    <text class="t center" x="165" y="198">Node Anomaly Scores</text>
+    <rect class="soft" x="56" y="235" width="218" height="52" rx="9"/>
+    <text class="t center" x="165" y="267">Alerted Nodes</text>
+    <rect class="soft" x="56" y="304" width="218" height="52" rx="9"/>
+    <text class="t center" x="165" y="336">Detection Threshold</text>
+
+    <circle class="check" cx="165" cy="378" r="14"/>
+    <path d="M157 378L163 384L174 371" fill="none" stroke="#fff" stroke-width="3"/>
+    <text class="s center muted" x="165" y="426">detector-independent response</text>
+  </g>
+
+  <path class="flow" d="M1385 255H1445"/>
+
+  <!-- 4. reusable attack logic -->
+  <g transform="translate(1445 30)">
+    <rect class="group" width="330" height="450" rx="22"/>
+    <circle class="circle" cx="42" cy="42" r="25"/><text class="num" x="42" y="43">4</text>
+    <text class="stage" x="84" y="41">Shared Attack</text><text class="stage" x="84" y="69">Logic</text>
+
+    <rect class="panel" x="26" y="96" width="278" height="300" rx="12"/>
+    <rect class="soft" x="57" y="130" width="216" height="62" rx="10"/>
+    <text class="h center" x="165" y="158">Target Selection</text>
+    <text class="s center muted" x="165" y="181">rank observable alerts</text>
+    <path class="flow" d="M165 192V224"/>
+
+    <rect class="soft" x="57" y="226" width="216" height="62" rx="10"/>
+    <text class="h center" x="165" y="254">Action Decision</text>
+    <text class="s center muted" x="165" y="277">shared policy interface</text>
+    <path class="flow" d="M165 288V320"/>
+
+    <rect class="soft" x="57" y="322" width="216" height="62" rx="10"/>
+    <text class="h center" x="165" y="350">Reward and Update</text>
+    <text class="s center muted" x="165" y="373">score and alert feedback</text>
+
+    <rect class="pill" x="75" y="410" width="180" height="28" rx="14"/>
+    <text class="s center" x="165" y="429">unchanged across detectors</text>
+  </g>
+
+</svg>

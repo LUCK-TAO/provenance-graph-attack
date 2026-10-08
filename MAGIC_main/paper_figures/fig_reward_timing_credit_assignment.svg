@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1265.04pt" height="698.4pt" viewBox="0 0 1265.04 698.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-29T17:54:47.289998</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 698.4 
+L 1265.04 698.4 
+L 1265.04 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 151.63138 152.208 
+Q 167.001466 152.208 180.694501 152.208 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 175.494501 149.608 
+L 180.694501 152.208 
+L 175.494501 154.808 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 364.3272 213.084 
+L 768.7008 213.084 
+Q 777.0384 213.084 777.0384 204.876 
+L 777.0384 99.54 
+Q 777.0384 91.332 768.7008 91.332 
+L 364.3272 91.332 
+Q 355.9896 91.332 355.9896 99.54 
+L 355.9896 204.876 
+Q 355.9896 213.084 364.3272 213.084 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #f7fafd; stroke-dasharray: 4.81,2.08; stroke-dashoffset: 0; stroke: #3e78b2; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 438.585307 161.784 
+Q 444.921983 161.784 450.028821 161.784 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 444.828821 159.184 
+L 450.028821 161.784 
+L 444.828821 164.384 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 515.013307 161.784 
+Q 521.349983 161.784 526.456821 161.784 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 521.256821 159.184 
+L 526.456821 161.784 
+L 521.256821 164.384 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 591.441307 161.784 
+Q 597.777983 161.784 602.884821 161.784 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 597.684821 159.184 
+L 602.884821 161.784 
+L 597.684821 164.384 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 667.869307 161.784 
+Q 674.205983 161.784 679.312821 161.784 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 674.112821 159.184 
+L 679.312821 161.784 
+L 674.112821 164.384 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 328.811741 152.208 
+Q 342.444482 152.208 354.400171 152.208 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 349.200171 149.608 
+L 354.400171 152.208 
+L 349.200171 154.808 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 776.95138 152.208 
+Q 792.321466 152.208 806.014501 152.208 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 800.814501 149.608 
+L 806.014501 152.208 
+L 800.814501 154.808 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 961.07338 152.208 
+Q 976.443466 152.208 990.136501 152.208 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 984.936501 149.608 
+L 990.136501 152.208 
+L 984.936501 154.808 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 1103.50738 152.208 
+Q 1118.877466 152.208 1132.570501 152.208 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 1127.370501 149.608 
+L 1132.570501 152.208 
+L 1127.370501 154.808 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 883.880682 190.457247 
+Q 879.734746 244.207182 883.751885 296.285032 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #c77a17; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 885.944259 290.900471 
+L 883.751885 296.285032 
+L 880.75966 291.300396 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #c77a17; stroke: #c77a17; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 287.120958 355.356 
+Q 649.889969 355.356 1011.540945 355.356 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-linecap: round"/>
+    <path d="M 1006.340945 352.756 
+L 1011.540945 355.356 
+L 1006.340945 357.956 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-linecap: round"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 512.932284 355.356 
+Q 762.795152 355.356 1011.539985 355.356 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-linecap: round"/>
+    <path d="M 1006.339985 352.756 
+L 1011.539985 355.356 
+L 1006.339985 357.956 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-linecap: round"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 832.535539 355.356 
+Q 922.59872 355.356 1011.543866 355.356 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-linecap: round"/>
+    <path d="M 1006.343866 352.756 
+L 1011.543866 355.356 
+L 1006.343866 357.956 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-linecap: round"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 999.28738 355.356 
+Q 1005.973494 355.356 1011.541574 355.356 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-linecap: round"/>
+    <path d="M 1006.341574 352.756 
+L 1011.541574 355.356 
+L 1006.341574 357.956 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-linecap: round"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 1110.075019 406.038339 
+Q 730.992357 558.950079 326.981125 509.023891 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #c77a17; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 331.822997 512.242008 
+L 326.981125 509.023891 
+L 332.460742 507.081264 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #c77a17; stroke: #c77a17; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 370.498469 546.876 
+Q 389.340861 546.876 406.506201 546.876 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 401.306201 544.276 
+L 406.506201 546.876 
+L 401.306201 549.476 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 624.100469 546.876 
+Q 642.942861 546.876 660.108201 546.876 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 654.908201 544.276 
+L 660.108201 546.876 
+L 654.908201 549.476 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 954.130469 546.876 
+Q 972.972861 546.876 990.138201 546.876 
+" clip-path="url(#p3acf4d873b)" style="fill: none; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 984.938201 544.276 
+L 990.138201 546.876 
+L 984.938201 549.476 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #7b8794; stroke: #7b8794; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 41.94 190.512 
+L 142.686 190.512 
+Q 151.7184 190.512 151.7184 181.62 
+L 151.7184 123.48 
+Q 151.7184 114.588 142.686 114.588 
+L 41.94 114.588 
+Q 32.9076 114.588 32.9076 123.48 
+L 32.9076 181.62 
+Q 32.9076 190.512 41.94 190.512 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #dcebfa; stroke: #3e78b2; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_22">
+    <path d="M 191.322 190.512 
+L 319.86 190.512 
+Q 328.8924 190.512 328.8924 181.62 
+L 328.8924 123.48 
+Q 328.8924 114.588 319.86 114.588 
+L 191.322 114.588 
+Q 182.2896 114.588 182.2896 123.48 
+L 182.2896 181.62 
+Q 182.2896 190.512 191.322 190.512 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #eae3f7; stroke: #7655a6; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 380.3076 190.512 
+L 433.1124 190.512 
+Q 438.6708 190.512 438.6708 185.04 
+L 438.6708 138.528 
+Q 438.6708 133.056 433.1124 133.056 
+L 380.3076 133.056 
+Q 374.7492 133.056 374.7492 138.528 
+L 374.7492 185.04 
+Q 374.7492 190.512 380.3076 190.512 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #dcebfa; stroke: #3e78b2; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 456.7356 190.512 
+L 509.5404 190.512 
+Q 515.0988 190.512 515.0988 185.04 
+L 515.0988 138.528 
+Q 515.0988 133.056 509.5404 133.056 
+L 456.7356 133.056 
+Q 451.1772 133.056 451.1772 138.528 
+L 451.1772 185.04 
+Q 451.1772 190.512 456.7356 190.512 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #dcebfa; stroke: #3e78b2; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_25">
+    <path d="M 533.1636 190.512 
+L 585.9684 190.512 
+Q 591.5268 190.512 591.5268 185.04 
+L 591.5268 138.528 
+Q 591.5268 133.056 585.9684 133.056 
+L 533.1636 133.056 
+Q 527.6052 133.056 527.6052 138.528 
+L 527.6052 185.04 
+Q 527.6052 190.512 533.1636 190.512 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #dcebfa; stroke: #3e78b2; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_26">
+    <path d="M 609.5916 190.512 
+L 662.3964 190.512 
+Q 667.9548 190.512 667.9548 185.04 
+L 667.9548 138.528 
+Q 667.9548 133.056 662.3964 133.056 
+L 609.5916 133.056 
+Q 604.0332 133.056 604.0332 138.528 
+L 604.0332 185.04 
+Q 604.0332 190.512 609.5916 190.512 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #dcebfa; stroke: #3e78b2; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_27">
+    <path d="M 686.0196 190.512 
+L 738.8244 190.512 
+Q 744.3828 190.512 744.3828 185.04 
+L 744.3828 138.528 
+Q 744.3828 133.056 738.8244 133.056 
+L 686.0196 133.056 
+Q 680.4612 133.056 680.4612 138.528 
+L 680.4612 185.04 
+Q 680.4612 190.512 686.0196 190.512 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #dcebfa; stroke: #3e78b2; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_28">
+    <path d="M 816.642 190.512 
+L 952.128 190.512 
+Q 961.1604 190.512 961.1604 181.62 
+L 961.1604 123.48 
+Q 961.1604 114.588 952.128 114.588 
+L 816.642 114.588 
+Q 807.6096 114.588 807.6096 123.48 
+L 807.6096 181.62 
+Q 807.6096 190.512 816.642 190.512 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #fdebd2; stroke: #c77a17; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_29">
+    <path d="M 1000.764 190.512 
+L 1094.562 190.512 
+Q 1103.5944 190.512 1103.5944 181.62 
+L 1103.5944 123.48 
+Q 1103.5944 114.588 1094.562 114.588 
+L 1000.764 114.588 
+Q 991.7316 114.588 991.7316 123.48 
+L 991.7316 181.62 
+Q 991.7316 190.512 1000.764 190.512 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #dcebfa; stroke: #3e78b2; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_30">
+    <path d="M 1143.198 190.512 
+L 1223.1 190.512 
+Q 1232.1324 190.512 1232.1324 181.62 
+L 1232.1324 123.48 
+Q 1232.1324 114.588 1223.1 114.588 
+L 1143.198 114.588 
+Q 1134.1656 114.588 1134.1656 123.48 
+L 1134.1656 181.62 
+Q 1134.1656 190.512 1143.198 190.512 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #f2f4f7; stroke: #8a94a3; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_31">
+    <path d="M 45.414 395.712 
+L 278.172 395.712 
+Q 287.2044 395.712 287.2044 386.82 
+L 287.2044 323.892 
+Q 287.2044 315 278.172 315 
+L 45.414 315 
+Q 36.3816 315 36.3816 323.892 
+L 36.3816 386.82 
+Q 36.3816 395.712 45.414 395.712 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #e2f3e8; stroke: #3a8d5d; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_32">
+    <path d="M 309.438 395.712 
+L 503.982 395.712 
+Q 513.0144 395.712 513.0144 386.82 
+L 513.0144 323.892 
+Q 513.0144 315 503.982 315 
+L 309.438 315 
+Q 300.4056 315 300.4056 323.892 
+L 300.4056 386.82 
+Q 300.4056 395.712 309.438 395.712 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #e2f3e8; stroke: #3a8d5d; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_33">
+    <path d="M 535.248 402.552 
+L 823.59 402.552 
+Q 832.6224 402.552 832.6224 393.66 
+L 832.6224 317.052 
+Q 832.6224 308.16 823.59 308.16 
+L 535.248 308.16 
+Q 526.2156 308.16 526.2156 317.052 
+L 526.2156 393.66 
+Q 526.2156 402.552 535.248 402.552 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #e2f3e8; stroke: #3a8d5d; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_34">
+    <path d="M 847.908 395.712 
+L 990.342 395.712 
+Q 999.3744 395.712 999.3744 386.82 
+L 999.3744 323.892 
+Q 999.3744 315 990.342 315 
+L 847.908 315 
+Q 838.8756 315 838.8756 323.892 
+L 838.8756 386.82 
+Q 838.8756 395.712 847.908 395.712 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #f9e1e1; stroke: #b94a48; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_35">
+    <path d="M 1021.608 407.34 
+L 1216.152 407.34 
+Q 1225.1844 407.34 1225.1844 398.448 
+L 1225.1844 312.264 
+Q 1225.1844 303.372 1216.152 303.372 
+L 1021.608 303.372 
+Q 1012.5756 303.372 1012.5756 312.264 
+L 1012.5756 398.448 
+Q 1012.5756 407.34 1021.608 407.34 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #fdebd2; stroke: #c77a17; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_36">
+    <path d="M 59.31 587.232 
+L 361.548 587.232 
+Q 370.5804 587.232 370.5804 578.34 
+L 370.5804 515.412 
+Q 370.5804 506.52 361.548 506.52 
+L 59.31 506.52 
+Q 50.2776 506.52 50.2776 515.412 
+L 50.2776 578.34 
+Q 50.2776 587.232 59.31 587.232 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #dcebfa; stroke: #3e78b2; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_37">
+    <path d="M 417.132 587.232 
+L 615.15 587.232 
+Q 624.1824 587.232 624.1824 578.34 
+L 624.1824 515.412 
+Q 624.1824 506.52 615.15 506.52 
+L 417.132 506.52 
+Q 408.0996 506.52 408.0996 515.412 
+L 408.0996 578.34 
+Q 408.0996 587.232 417.132 587.232 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #f2f4f7; stroke: #8a94a3; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_38">
+    <path d="M 670.734 600.912 
+L 945.18 600.912 
+Q 954.2124 600.912 954.2124 592.02 
+L 954.2124 501.732 
+Q 954.2124 492.84 945.18 492.84 
+L 670.734 492.84 
+Q 661.7016 492.84 661.7016 501.732 
+L 661.7016 592.02 
+Q 661.7016 600.912 670.734 600.912 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #eae3f7; stroke: #7655a6; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_39">
+    <path d="M 1000.764 587.232 
+L 1209.204 587.232 
+Q 1218.2364 587.232 1218.2364 578.34 
+L 1218.2364 515.412 
+Q 1218.2364 506.52 1209.204 506.52 
+L 1000.764 506.52 
+Q 991.7316 506.52 991.7316 515.412 
+L 991.7316 578.34 
+Q 991.7316 587.232 1000.764 587.232 
+z
+" clip-path="url(#p3acf4d873b)" style="fill: #e2f3e8; stroke: #3a8d5d; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="fill: #1f2937; font: 700 20px 'Microsoft YaHei'; text-anchor: middle" x="632.52" y="36.647812" transform="rotate(-0 632.52 36.647812)">宏动作奖励计算与信用分配时机</text>
+   </g>
+   <g id="text_2">
+    <text style="fill: #1f2937; font: 700 14px 'Microsoft YaHei'; text-anchor: start" x="31.518" y="73.983469" transform="rotate(-0 31.518 73.983469)">①  宏动作执行：一次策略决策，连续五个同语义基元编辑</text>
+   </g>
+   <g id="text_3">
+    <text style="fill: #1f2937; font: 13px 'Microsoft YaHei'" transform="translate(72.813 147.499703)">宏状态</text>
+    <!-- $s_t$ -->
+    <g style="fill: #1f2937" transform="translate(86.918 164.760453)">
+     <text>
+      <tspan style="font: oblique 13px 'DejaVu Sans'" x="0" y="-0.71875">s</tspan>
+      <tspan style="font: oblique 9.1px 'DejaVu Sans'" x="6.772949" y="1.4140625">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_4">
+    <text style="fill: #1f2937; font: 12px 'Microsoft YaHei'" transform="translate(226.296937 147.888187)">语义 Actor</text>
+    <!-- $a_t\sim\pi_\theta(a|s_t)$ -->
+    <g style="fill: #1f2937" transform="translate(221.031 163.821187)">
+     <text>
+      <tspan style="font: oblique 12px 'DejaVu Sans'" x="0 25.705664 43.079297 54.475781" y="-0.828125">aπas</tspan>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="7.353516 32.930273 60.727734" y="1.140625">tθt</tspan>
+      <tspan style="font: 12px 'DejaVu Sans'" x="13.313086 38.397656 50.432812 64.349414" y="-0.828125">∼(|)</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_5">
+    <!-- 宏动作 $M_t$：五条边共享同一语义动作 $a_t$ -->
+    <g style="fill: #1f2937" transform="translate(464.854 111.598992)">
+     <text>
+      <tspan style="font: 11.5px 'Microsoft YaHei'" x="0 11.5 23 34.5 51.309399 62.809399 74.309399 85.809399 97.309399 108.809399 120.309399 131.809399 143.309399 154.809399 166.309399 177.809399 189.309399" y="-0.875">宏动作 ：五条边共享同一语义动作 </tspan>
+      <tspan style="font: oblique 11.5px 'DejaVu Sans'" x="37.902832 192.712231" y="-0.875">Ma</tspan>
+      <tspan style="font: oblique 8.05px 'DejaVu Sans'" x="47.824951 199.759351" y="1.09375">tt</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_6">
+    <!-- $e_{t,1}$ -->
+    <g style="fill: #1f2937" transform="translate(397.195 157.495203)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0" y="-0.84375">e</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="6.767578" y="0.9609375">t</tspan>
+      <tspan style="font: 7.7px 'DejaVu Sans'" x="9.78667 13.734424" y="0.9609375">,1</tspan>
+     </text>
+    </g>
+    <!-- $a_t$ -->
+    <g style="fill: #1f2937" transform="translate(401.65 172.115922)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0" y="-0.84375">a</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="6.740723" y="0.9609375">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_7">
+    <!-- $e_{t,2}$ -->
+    <g style="fill: #1f2937" transform="translate(473.623 157.495203)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0" y="-0.84375">e</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="6.767578" y="0.9609375">t</tspan>
+      <tspan style="font: 7.7px 'DejaVu Sans'" x="9.78667 13.734424" y="0.9609375">,2</tspan>
+     </text>
+    </g>
+    <!-- $a_t$ -->
+    <g style="fill: #1f2937" transform="translate(478.078 172.115922)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0" y="-0.84375">a</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="6.740723" y="0.9609375">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_8">
+    <!-- $e_{t,3}$ -->
+    <g style="fill: #1f2937" transform="translate(550.051 157.495203)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0" y="-0.84375">e</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="6.767578" y="0.9609375">t</tspan>
+      <tspan style="font: 7.7px 'DejaVu Sans'" x="9.78667 13.734424" y="0.9609375">,3</tspan>
+     </text>
+    </g>
+    <!-- $a_t$ -->
+    <g style="fill: #1f2937" transform="translate(554.506 172.115922)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0" y="-0.84375">a</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="6.740723" y="0.9609375">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_9">
+    <!-- $e_{t,4}$ -->
+    <g style="fill: #1f2937" transform="translate(626.479 157.495203)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0" y="-0.84375">e</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="6.767578" y="0.9609375">t</tspan>
+      <tspan style="font: 7.7px 'DejaVu Sans'" x="9.78667 13.734424" y="0.9609375">,4</tspan>
+     </text>
+    </g>
+    <!-- $a_t$ -->
+    <g style="fill: #1f2937" transform="translate(630.934 172.115922)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0" y="-0.84375">a</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="6.740723" y="0.9609375">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_10">
+    <!-- $e_{t,5}$ -->
+    <g style="fill: #1f2937" transform="translate(702.907 157.495203)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0" y="-0.84375">e</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="6.767578" y="0.9609375">t</tspan>
+      <tspan style="font: 7.7px 'DejaVu Sans'" x="9.78667 13.734424" y="0.9609375">,5</tspan>
+     </text>
+    </g>
+    <!-- $a_t$ -->
+    <g style="fill: #1f2937" transform="translate(707.362 172.115922)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0" y="-0.84375">a</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="6.740723" y="0.9609375">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_11">
+    <text style="fill: #1f2937; font: 12px 'Microsoft YaHei'" transform="translate(842.385 147.888187)">查询受害检测器</text>
+    <text style="fill: #1f2937; font: 12px 'Microsoft YaHei'" transform="translate(838.866562 163.821187)">仅在第5条边之后</text>
+   </g>
+   <g id="text_12">
+    <text style="fill: #1f2937; font: 13px 'Microsoft YaHei'" transform="translate(1028.163 147.499703)">新状态</text>
+    <!-- $s_{t+1}$ -->
+    <g style="fill: #1f2937" transform="translate(1033.818 164.760453)">
+     <text>
+      <tspan style="font: oblique 13px 'DejaVu Sans'" x="0" y="-0.71875">s</tspan>
+      <tspan style="font: oblique 9.1px 'DejaVu Sans'" x="6.772949" y="1.4140625">t</tspan>
+      <tspan style="font: 9.1px 'DejaVu Sans'" x="12.113867 21.511572" y="1.4140625">+1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_13">
+    <text style="fill: #1f2937; font: 12px 'Microsoft YaHei'" transform="translate(1159.149 147.888187)">终止判断</text>
+    <!-- $d_t$ -->
+    <g style="fill: #1f2937" transform="translate(1177.509 163.821187)">
+     <text>
+      <tspan style="font: oblique 12px 'DejaVu Sans'" x="0" y="-0.875">d</tspan>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="7.617188" y="1.09375">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_14">
+    <!-- 不进行逐边查询；宏奖励不拆分为 $r_t/5$，五个基元编辑共同获得一次联合反馈 -->
+    <g style="fill: #b94a48" transform="translate(371.0715 230.614992)">
+     <text>
+      <tspan style="font: 11.5px 'Microsoft YaHei'" x="0 11.5 23 34.5 46 57.5 69 80.5 92 103.5 115 126.5 138 149.5 161 172.5 195.30647 206.80647 218.30647 229.80647 241.30647 252.80647 264.30647 275.80647 287.30647 298.80647 310.30647 321.80647 333.30647 344.80647 356.30647 367.80647 379.30647" y="-0.9375">不进行逐边查询；宏奖励不拆分为 ，五个基元编辑共同获得一次联合反馈</tspan>
+      <tspan style="font: oblique 11.5px 'DejaVu Sans'" x="175.902832" y="-0.9375">r</tspan>
+      <tspan style="font: oblique 8.05px 'DejaVu Sans'" x="180.630859" y="1.03125">t</tspan>
+      <tspan style="font: 11.5px 'DejaVu Sans'" x="184.115308 187.989819" y="-0.9375">/5</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_15">
+    <text style="fill: #1f2937; font: 700 14px 'Microsoft YaHei'; text-anchor: start" x="31.518" y="272.343469" transform="rotate(-0 31.518 272.343469)">②  奖励计算：只使用检测器可观察分数、固定阈值与编辑数量</text>
+   </g>
+   <g id="text_16">
+    <!-- $s_t(v),\ s_{t+1}(v),\ \tau$ -->
+    <g style="fill: #5f6b7a" transform="translate(902.1024 250.997297)">
+     <text>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="0 13.342334 33.354994 61.048353 81.061013" y="-0.65625">svsvτ</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="5.730957 39.085951" y="1.1484375">tt</tspan>
+      <tspan style="font: 11px 'DejaVu Sans'" x="9.05083 19.8521 24.143604 56.756849 67.558119 71.849622" y="-0.65625">(),(),</tspan>
+      <tspan style="font: 7.7px 'DejaVu Sans'" x="43.605189 51.557093" y="1.1484375">+1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_17">
+    <text style="fill: #1f2937; font: 10.5px 'Microsoft YaHei'" transform="translate(114.442922 343.917727)">分数变化奖励 / 惩罚</text>
+    <!-- $r_{score}=\mathrm{clip}\!\left(\dfrac{s_t(v)-s_{t+1}(v)}{\max(|s_t(v)|,|\tau|,\epsilon)},-1,1\right)$ -->
+    <g style="fill: #1f2937" transform="translate(62.9355 365.947711)">
+     <text>
+      <tspan style="font: oblique 10.5px 'DejaVu Sans'" x="0 70.110571 82.860107 91.621069 104.370605 106.05957 127.139404 132.507812 142.381835" y="-0.09375 -6.65625 -6.65625 6.8359375 6.8359375 -6.65625 6.8359375 -6.65625 6.8359375">rsvsvsτvε</tspan>
+      <tspan style="font: oblique 7.35px 'DejaVu Sans'" x="4.316895 8.146216 12.18728 16.684131 19.705957 75.58103 97.091528 111.530029" y="1.7109375 1.7109375 1.7109375 1.7109375 1.7109375 -4.8515625 8.640625 -4.8515625">scorettt</tspan>
+      <tspan style="font: 10.5px 'DejaVu Sans'" x="26.574365 37.417871 43.19082 46.108057 49.025293 61.110571 71.338842 77.773168 78.763671 83.987036 88.083471 89.073974 95.216064 100.274169 110.584472 114.680908 118.218505 123.601806 128.411376 133.460937 136.998535 138.721679 148.057373 153.466308 160.895263 171.738769 178.419189 183.80249" y="-0.09375 -0.09375 -0.09375 -0.09375 -0.09375 6.8359375 6.8359375 6.8359375 -6.65625 6.8359375 6.8359375 -6.65625 -6.65625 6.8359375 6.8359375 6.8359375 6.8359375 6.8359375 -6.65625 6.8359375 6.8359375 -6.65625 6.8359375 -0.09375 -0.09375 -0.09375 -0.09375 -0.09375">=clipmax((|)−()|,|(|,)),−1,1</tspan>
+      <tspan style="font: 9.483969px 'STIXSizeThreeSym'" x="53.985586 190.48291" y="5.8828125">()</tspan>
+      <tspan style="font: 7.35px 'DejaVu Sans'" x="115.843847 123.434301" y="-4.8515625">+1</tspan>
+     </text>
+     <rect x="61.110571" y="-3.226562" width="91.043237" height="0.65625"/>
+    </g>
+   </g>
+   <g id="text_18">
+    <text style="fill: #1f2937; font: 10.5px 'Microsoft YaHei'" transform="translate(380.46 351.276914)">跨阈值奖励</text>
+    <!-- $r_{cross}=\mathbb{I}[s_t(v)\geq\tau&gt;s_{t+1}(v)]$ -->
+    <g style="fill: #1f2937" transform="translate(336.6225 365.218289)">
+     <text>
+      <tspan style="font: oblique 10.5px 'DejaVu Sans'" x="0 44.181656 56.931192 80.130655 99.341348 125.78959" y="-0.640625">rsvτsv</tspan>
+      <tspan style="font: oblique 7.35px 'DejaVu Sans'" x="4.316895 8.357959 11.379785 15.876636 19.705957 49.652115 104.811807" y="1.1640625">crosstt</tspan>
+      <tspan style="font: 10.5px 'DejaVu Sans'" x="25.881714 40.08522 52.834756 63.145059 69.287149 88.497842 121.693155 132.003458 136.099893" y="-0.640625">=[()≥&gt;()]</tspan>
+      <tspan style="font: italic 10.5px 'STIXNonUnicode'" x="36.72522" y="-0.640625"></tspan>
+      <tspan style="font: 7.35px 'DejaVu Sans'" x="109.125626 116.71608" y="1.1640625">+1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_19">
+    <text style="fill: #1f2937; font: 10.3px 'Microsoft YaHei'" transform="translate(643.369 343.722794)">无标签间接影响</text>
+    <!-- $r_{ind}=0.5\,\mathrm{mean}(\mathrm{Top5}(\Delta s_i^+))$ -->
+    <g style="fill: #1f2937" transform="translate(609.7395 357.824459)">
+     <text>
+      <tspan style="font: oblique 10.3px 'DejaVu Sans'" x="0 115.768149" y="-0.7453125000000007">rs</tspan>
+      <tspan style="font: oblique 7.21px 'DejaVu Sans'" x="4.214111 6.207556 10.754993 121.108358" y="0.8953124999999993 0.8953124999999993 0.8953124999999993 1.9890624999999993">indi</tspan>
+      <tspan style="font: 10.3px 'DejaVu Sans'" x="17.579822 28.165149 34.686511 37.94469 46.130209 56.11495 62.421103 68.702231 75.198568 79.19747 85.458578 91.729696 98.236044 104.757406 108.756308 130.653503 134.652405" y="-0.7453125000000007">=0.5mean(Top5(Δ))</tspan>
+      <tspan style="font: 7.21px 'DejaVu Sans'" x="122.970337" y="-4.6140625">+</tspan>
+     </text>
+    </g>
+    <!-- $\quad+0.5\tanh(N_{ind\_cross}/2)$ -->
+    <g style="fill: #1f2937" transform="translate(618.546 371.823769)">
+     <text>
+      <tspan style="font: 10.3px 'DejaVu Sans'" x="11.981689 22.567017 29.088379 32.346558 38.86792 42.886841 49.167969 55.664307 62.160645 107.544092 110.622461 117.143823" y="-0.40625">+0.5tanh(/2)</tspan>
+      <tspan style="font: oblique 10.3px 'DejaVu Sans'" x="66.159546" y="-0.40625">N</tspan>
+      <tspan style="font: oblique 7.21px 'DejaVu Sans'" x="73.827026 75.820471 80.367908 88.509851 92.4547 95.404578 99.79436 103.532507" y="1.234375">indcross</tspan>
+      <tspan style="font: 7.21px 'DejaVu Sans'" x="84.922351" y="1.234375">_</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_20">
+    <text style="fill: #1f2937; font: 10.5px 'Microsoft YaHei'" transform="translate(887.625 351.276914)">编辑成本惩罚</text>
+    <!-- $r_{edit}=\Delta E_t/L$ -->
+    <g style="fill: #1f2937" transform="translate(890.0925 365.218289)">
+     <text>
+      <tspan style="font: oblique 10.5px 'DejaVu Sans'" x="0 38.801123 52.15564" y="-0.984375">rEL</tspan>
+      <tspan style="font: oblique 7.35px 'DejaVu Sans'" x="4.316895 8.838867 13.504395 15.54646 45.4354" y="0.8203125">editt</tspan>
+      <tspan style="font: 10.5px 'DejaVu Sans'" x="20.774756 31.618262 48.618042" y="-0.984375">=Δ/</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_21">
+    <text style="fill: #1f2937; font: 10.8px 'Microsoft YaHei'" transform="translate(1086.48 343.990519)">宏动作总奖励</text>
+    <!-- $r_t=1.0r_{score}$ -->
+    <g style="fill: #1f2937" transform="translate(1087.182 358.330219)">
+     <text>
+      <tspan style="font: oblique 10.8px 'DejaVu Sans'" x="0 37.963049" y="-0.828125">rr</tspan>
+      <tspan style="font: oblique 7.56px 'DejaVu Sans'" x="4.419678 42.382727 46.303223 50.440503 55.044421 58.138196" y="0.9765625">tscore</tspan>
+      <tspan style="font: 10.8px 'DejaVu Sans'" x="9.765295 20.86698 27.706458 31.123572" y="-0.828125">=1.0</tspan>
+     </text>
+    </g>
+    <!-- $+0.5r_{cross}+0.2r_{ind}-0.05r_{edit}$ -->
+    <g style="fill: #1f2937" transform="translate(1042.092 372.669919)">
+     <text>
+      <tspan style="font: 10.8px 'DejaVu Sans'" x="0 9.007324 15.846802 19.263916 52.594177 63.695862 70.535339 73.327454 98.618311 109.719995 116.559473 119.976587 126.816064" y="-0.828125">+0.5+0.2−0.05</tspan>
+      <tspan style="font: oblique 10.8px 'DejaVu Sans'" x="26.103394 80.166931 133.655542" y="-0.828125">rrr</tspan>
+      <tspan style="font: oblique 7.56px 'DejaVu Sans'" x="30.523071 34.660352 37.754126 42.358044 46.27854 84.586609 86.677295 91.446558 138.07522 142.704858 147.48147 149.572156" y="0.9765625">crossindedit</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_22">
+    <text style="fill: #5f6b7a; font: 11.5px 'Microsoft YaHei'; text-anchor: middle" x="632.52" y="429.658992" transform="rotate(-0 632.52 429.658992)">在线奖励不读取 metadata 真值；间接项只观察未被直接攻击的初始告警</text>
+   </g>
+   <g id="text_23">
+    <text style="fill: #1f2937; font: 700 14px 'Microsoft YaHei'; text-anchor: start" x="31.518" y="470.703469" transform="rotate(-0 31.518 470.703469)">③  信用分配：宏内联合归因，宏间通过GAE传播，目标间相互隔离</text>
+   </g>
+   <g id="text_24">
+    <text style="fill: #1f2937; font: 12.5px 'Microsoft YaHei'" transform="translate(161.434859 542.019945)">一个宏 transition</text>
+    <!-- $(s_t,\ a_t,\ r_t,\ s_{t+1},\ d_t)$ -->
+    <g style="fill: #1f2937" transform="translate(150.1165 558.61682)">
+     <text>
+      <tspan style="font: 12.5px 'DejaVu Sans'" x="0 15.175415 37.089071 56.481974 93.556153 115.744467" y="-0.125">(,,,,)</tspan>
+      <tspan style="font: oblique 12.5px 'DejaVu Sans'" x="4.876709 25.642904 47.556559 66.949463 104.023641" y="-0.125">sarsd</tspan>
+      <tspan style="font: oblique 8.75px 'DejaVu Sans'" x="11.38916 33.302816 52.69572 73.461914 111.958212" y="2.0078125">ttttt</tspan>
+      <tspan style="font: 8.75px 'DejaVu Sans'" x="78.597412 87.633667" y="2.0078125">+1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_25">
+    <text style="fill: #1f2937; font: 12px 'Microsoft YaHei'" transform="translate(489.401625 542.214187)">宏 rollout</text>
+    <text style="fill: #1f2937; font: 12px 'Microsoft YaHei'" transform="translate(467.363812 558.147187)">累计8个transition</text>
+   </g>
+   <g id="text_26">
+    <text style="fill: #1f2937; font: 11.5px 'Microsoft YaHei'" transform="translate(773.47407 534.773867)">GAE优势估计</text>
+    <!-- $\delta_t=r_t+\gamma V(s_{t+1})(1-d_t)-V(s_t)$ -->
+    <g style="fill: #1f2937" transform="translate(719.5795 550.042992)">
+     <text>
+      <tspan style="font: oblique 11.5px 'DejaVu Sans'" x="0 24.637036 46.966211 53.771875 66.125391 121.011133 150.398657 162.752173" y="-0.875">δrγVsdVs</tspan>
+      <tspan style="font: oblique 8.05px 'DejaVu Sans'" x="7.035889 29.365063 72.116846 128.310937 168.743628" y="1.09375">ttttt</tspan>
+      <tspan style="font: 11.5px 'DejaVu Sans'" x="12.760815 35.08999 61.638818 90.604639 95.091211 99.577783 109.134912 131.795386 138.522437 158.265601 172.228076" y="-0.875">=+()(1−)−()</tspan>
+      <tspan style="font: 8.05px 'DejaVu Sans'" x="76.841504 85.154858" y="1.09375">+1</tspan>
+     </text>
+    </g>
+    <!-- $A_t=\delta_t+\gamma\lambda(1-d_t)A_{t+1}$ -->
+    <g style="fill: #1f2937" transform="translate(742.3495 565.312117)">
+     <text>
+      <tspan style="font: oblique 11.5px 'DejaVu Sans'" x="0 25.468091 50.105127 56.910791 89.636377 104.907202" y="-0.875">AδγλdA</tspan>
+      <tspan style="font: oblique 8.05px 'DejaVu Sans'" x="7.866943 32.503979 96.936182 112.774146" y="1.09375">tttt</tspan>
+      <tspan style="font: 11.5px 'DejaVu Sans'" x="13.59187 38.228906 63.716455 68.203027 77.760156 100.42063" y="-0.875">=+(1−)</tspan>
+      <tspan style="font: 8.05px 'DejaVu Sans'" x="117.498804 125.812158" y="1.09375">+1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_27">
+    <text style="fill: #1f2937; font: 12.5px 'Microsoft YaHei'" transform="translate(1079.741812 542.019945)">PPO更新</text>
+    <text style="fill: #1f2937; font: 12.5px 'Microsoft YaHei'" transform="translate(1065.128531 558.61682)">Actor + Critic</text>
+   </g>
+   <g id="text_28">
+    <!-- 同一目标：后续宏奖励以 $\gamma\lambda$ 折扣回传   ｜   目标边界：$d_t=1$，奖励不传播到下一目标 -->
+    <g style="fill: #1f2937" transform="translate(587.0396 631.607)">
+     <text>
+      <tspan style="font: 11.5px 'Microsoft YaHei'" x="0 11.5 23 34.5 46 57.5 69 80.5 92 103.5 115 126.5 143.51416 146.916992 158.416992 169.916992 181.416992 192.916992 196.319824 199.722656 203.125488 214.625488 218.02832 221.431152 224.833984 236.333984 247.833984 259.333984 270.833984 314.551587 326.051587 337.551587 349.051587 360.551587 372.051587 383.551587 395.051587 406.551587 418.051587 429.551587" y="-0.96875">同一目标：后续宏奖励以  折扣回传   ｜   目标边界：，奖励不传播到下一目标</tspan>
+      <tspan style="font: oblique 11.5px 'DejaVu Sans'" x="129.902832 136.708496 282.333984" y="-0.96875">γλd</tspan>
+      <tspan style="font: oblique 8.05px 'DejaVu Sans'" x="289.633789" y="1.0">t</tspan>
+      <tspan style="font: 11.5px 'DejaVu Sans'" x="295.358716 307.234937" y="-0.96875">=1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_29">
+    <!-- PPO只更新语义动作 $a_t$ 的概率；五个候选端点由确定性合法选择器生成，不单独接收梯度。 -->
+    <g style="fill: #5f6b7a" transform="translate(52.362 644.981297)">
+     <text>
+      <tspan style="font: 11px 'Microsoft YaHei'" x="0 6.97998 13.709961 22.674316 33.674316 44.674316 55.674316 66.674316 77.674316 88.674316 99.674316 112.989795 116.244678 127.244678 138.244678 149.244678 160.244678 171.244678 182.244678 193.244678 204.244678 215.244678 226.244678 237.244678 248.244678 259.244678 270.244678 281.244678 292.244678 303.244678 314.244678 325.244678 336.244678 347.244678 358.244678 369.244678 380.244678 391.244678 402.244678 413.244678 424.244678 435.244678" y="-0.734375">PPO只更新语义动作  的概率；五个候选端点由确定性合法选择器生成，不单独接收梯度。</tspan>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="102.929199" y="-0.734375">a</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="109.669922" y="1.0703125">t</tspan>
+     </text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p3acf4d873b">
+   <rect x="7.2" y="7.2" width="1250.64" height="684"/>
+  </clipPath>
+ </defs>
+</svg>

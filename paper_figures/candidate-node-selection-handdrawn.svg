@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="650" viewBox="0 0 1800 650" role="img" aria-labelledby="title desc">
+  <title id="title">Hand-drawn target and candidate-node construction</title>
+  <desc id="desc">A target alert node determines valid semantic actions, after which local and global candidates are filtered to construct the candidate pool and action mask.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#202124"/>
+    </marker>
+    <marker id="arrowSmall" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#202124"/>
+    </marker>
+    <style>
+      .bg{fill:#fff}.card{fill:#fff;stroke:#202124;stroke-width:4}.mini{fill:#fff;stroke:#202124;stroke-width:3}
+      .softBlue{fill:#e7f5ff;stroke:#202124;stroke-width:2.5}.softGreen{fill:#ebfbee;stroke:#202124;stroke-width:2.5}
+      .softYellow{fill:#fff3bf;stroke:#202124;stroke-width:2.5}.softPurple{fill:#f3f0ff;stroke:#202124;stroke-width:2.5}
+      .title{font:700 29px 'Comic Sans MS','Segoe Print',sans-serif;fill:#202124;text-anchor:middle}
+      .heading{font:700 21px 'Comic Sans MS','Segoe Print',sans-serif;fill:#202124;text-anchor:middle}
+      .text{font:18px 'Comic Sans MS','Segoe Print',sans-serif;fill:#343a40;text-anchor:middle}
+      .small{font:16px 'Comic Sans MS','Segoe Print',sans-serif;fill:#343a40;text-anchor:middle}
+      .tiny{font:14px 'Comic Sans MS','Segoe Print',sans-serif;fill:#343a40;text-anchor:middle}
+      .left{text-anchor:start}.step{font:700 19px 'Comic Sans MS','Segoe Print',sans-serif;fill:#fff;text-anchor:middle;dominant-baseline:middle}
+      .line{fill:none;stroke:#202124;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+      .flow{fill:none;stroke:#202124;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+      .subflow{fill:none;stroke:#202124;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowSmall)}
+      .node{fill:#fff;stroke:#202124;stroke-width:2.5}.process{fill:#e7f5ff;stroke:#202124;stroke-width:2.5}
+      .file{fill:#fff3bf;stroke:#202124;stroke-width:2.5}.network{fill:#f3f0ff;stroke:#202124;stroke-width:2.5;stroke-dasharray:4 3}
+      .candidate{fill:#8ce99a;stroke:#202124;stroke-width:2.5}.target{fill:#ff8787;stroke:#202124;stroke-width:4}
+    </style>
+  </defs>
+
+  <rect class="bg" width="1800" height="650"/>
+
+  <!-- 1. Target alert node -->
+  <g>
+    <rect class="card" x="30" y="40" width="500" height="560" rx="28"/>
+    <circle cx="70" cy="80" r="25" fill="#74c0fc" stroke="#202124" stroke-width="2.5"/>
+    <text class="step" x="70" y="81">1</text>
+    <text class="title" x="280" y="91">Target Alert Node</text>
+
+    <rect class="softPurple" x="68" y="125" width="424" height="105" rx="20"/>
+    <text class="heading" x="280" y="157">Black-Box Alert Ranking</text>
+    <text class="small" x="280" y="184">observable anomaly scores and alert status</text>
+    <rect x="210" y="195" width="140" height="27" rx="14" fill="#fff" stroke="#202124" stroke-width="2"/>
+    <text class="tiny" x="280" y="214">Select Top-K</text>
+
+    <rect class="softBlue" x="68" y="252" width="424" height="295" rx="22"/>
+    <text class="heading" x="280" y="286">Selected Target and Local Context</text>
+    <g transform="translate(117 324)">
+      <path class="line" d="M28 73L118 25L207 77L293 28M118 25L151 157M207 77L151 157M207 77L286 149"/>
+      <circle class="process" cx="28" cy="73" r="17"/><text class="tiny" x="28" y="79">P</text>
+      <circle class="file" cx="118" cy="25" r="17"/><text class="tiny" x="118" y="31">F</text>
+      <circle class="target" cx="207" cy="77" r="23"/><text class="heading" x="207" y="84">v<tspan baseline-shift="sub" font-size="13">t</tspan></text>
+      <circle class="network" cx="293" cy="28" r="17"/><text class="tiny" x="293" y="34">N</text>
+      <circle class="process" cx="151" cy="157" r="17"/><text class="tiny" x="151" y="163">P</text>
+      <circle class="file" cx="286" cy="149" r="17"/><text class="tiny" x="286" y="155">F</text>
+      <circle cx="207" cy="77" r="54" fill="none" stroke="#202124" stroke-width="2" stroke-dasharray="7 6"/>
+    </g>
+    <rect x="165" y="507" width="230" height="29" rx="15" fill="#fff" stroke="#202124" stroke-width="2"/>
+    <text class="tiny" x="280" y="527">target node v<tspan baseline-shift="sub" font-size="11">t</tspan> and node type</text>
+  </g>
+
+  <!-- transition 1 -->
+  <path class="flow" d="M530 320C575 320 598 320 642 320"/>
+  <text class="small" x="586" y="298">target type</text>
+
+  <!-- 2. Semantic action filtering -->
+  <g>
+    <rect class="card" x="650" y="40" width="500" height="560" rx="28"/>
+    <circle cx="690" cy="80" r="25" fill="#ff8787" stroke="#202124" stroke-width="2.5"/>
+    <text class="step" x="690" y="81">2</text>
+    <text class="title" x="900" y="91">Semantic Action Filtering</text>
+
+    <rect class="softPurple" x="690" y="125" width="420" height="52" rx="20"/>
+    <text class="heading" x="900" y="159">Valid Actions for Target v<tspan baseline-shift="sub" font-size="13">t</tspan></text>
+
+    <rect class="softYellow" x="690" y="198" width="420" height="82" rx="18"/>
+    <circle cx="724" cy="239" r="14" fill="#51cf66" stroke="#202124" stroke-width="2"/>
+    <path d="M716 239L722 245L733 232" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <text class="heading left" x="750" y="233">READ</text><text class="tiny left" x="750" y="258">Process → File</text>
+    <circle class="process" cx="1025" cy="239" r="14"/><path class="subflow" d="M1042 239H1070"/><circle class="file" cx="1088" cy="239" r="14"/>
+
+    <rect class="softBlue" x="690" y="297" width="420" height="82" rx="18"/>
+    <circle cx="724" cy="338" r="14" fill="#51cf66" stroke="#202124" stroke-width="2"/>
+    <path d="M716 338L722 344L733 331" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <text class="heading left" x="750" y="332">WRITE</text><text class="tiny left" x="750" y="357">Process → File</text>
+    <circle class="process" cx="1025" cy="338" r="14"/><path class="subflow" d="M1042 338H1070"/><circle class="file" cx="1088" cy="338" r="14"/>
+
+    <rect class="softGreen" x="690" y="396" width="420" height="82" rx="18"/>
+    <circle cx="724" cy="437" r="14" fill="#51cf66" stroke="#202124" stroke-width="2"/>
+    <path d="M716 437L722 443L733 430" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <text class="heading left" x="750" y="431">SENDMSG</text><text class="tiny left" x="750" y="456">Process → NetFlow</text>
+    <circle class="process" cx="1025" cy="437" r="14"/><path class="subflow" d="M1042 437H1070"/><circle class="network" cx="1088" cy="437" r="14"/>
+
+    <text class="small" x="900" y="505">node type · edge type · direction</text>
+    <rect x="774" y="530" width="252" height="38" rx="19" fill="#fff" stroke="#202124" stroke-width="2.5"/>
+    <text class="heading" x="900" y="556">Valid Action Set A(v<tspan baseline-shift="sub" font-size="13">t</tspan>)</text>
+  </g>
+
+  <!-- transition 2 -->
+  <path class="flow" d="M1150 320C1195 320 1218 320 1262 320"/>
+  <text class="small" x="1206" y="298">semantic schema</text>
+
+  <!-- 3. Candidate pool and mask -->
+  <g>
+    <rect class="card" x="1270" y="40" width="500" height="560" rx="28"/>
+    <circle cx="1310" cy="80" r="25" fill="#69db7c" stroke="#202124" stroke-width="2.5"/>
+    <text class="step" x="1310" y="81">3</text>
+    <text class="title" x="1535" y="78">Candidate Pool</text>
+    <text class="title" x="1535" y="108">and Action Mask</text>
+
+    <rect class="softBlue" x="1302" y="126" width="205" height="120" rx="18"/>
+    <text class="heading" x="1404" y="158">Local Candidates</text>
+    <text class="tiny" x="1404" y="181">two-hop neighborhood</text>
+    <g transform="translate(1344 202)"><path class="line" d="M8 22L45 4L82 24L116 5"/><circle class="process" cx="8" cy="22" r="8"/><circle class="candidate" cx="45" cy="4" r="8"/><circle class="file" cx="82" cy="24" r="8"/><circle class="network" cx="116" cy="5" r="8"/></g>
+
+    <rect class="softYellow" x="1533" y="126" width="205" height="120" rx="18"/>
+    <text class="heading" x="1635" y="158">Global Candidates</text>
+    <text class="tiny" x="1635" y="181">graph-wide benign nodes</text>
+    <g transform="translate(1571 211)"><circle class="file" cx="10" cy="4" r="9"/><circle class="process" cx="47" cy="4" r="9"/><circle class="network" cx="84" cy="4" r="9"/><circle class="candidate" cx="121" cy="4" r="9"/></g>
+
+    <path class="subflow" d="M1404 246V274"/><path class="subflow" d="M1635 246V274"/>
+    <rect class="softPurple" x="1342" y="276" width="356" height="68" rx="18"/>
+    <text class="heading" x="1520" y="305">Semantic Compatibility Filter</text>
+    <text class="tiny" x="1520" y="329">type · relation · direction · availability</text>
+
+    <path class="subflow" d="M1520 344V371"/>
+    <rect class="softGreen" x="1360" y="373" width="320" height="66" rx="18"/>
+    <text class="heading" x="1520" y="402">Candidate-Node Pool C(v<tspan baseline-shift="sub" font-size="12">t</tspan>, a)</text>
+    <text class="tiny" x="1520" y="426">valid local nodes + benign supplements</text>
+
+    <path class="subflow" d="M1520 439V465"/>
+    <rect class="mini" x="1342" y="467" width="356" height="105" rx="18"/>
+    <text class="heading left" x="1368" y="501">Action Mask</text>
+    <text class="tiny left" x="1368" y="528">valid target–action pairs</text>
+    <text class="tiny left" x="1368" y="551">1 = selectable, 0 = masked</text>
+    <g transform="translate(1604 490)">
+      <rect x="0" y="0" width="22" height="22" fill="#69db7c" stroke="#202124" stroke-width="2"/><rect x="26" y="0" width="22" height="22" fill="#fff" stroke="#202124" stroke-width="2"/><rect x="52" y="0" width="22" height="22" fill="#69db7c" stroke="#202124" stroke-width="2"/>
+      <rect x="0" y="26" width="22" height="22" fill="#fff" stroke="#202124" stroke-width="2"/><rect x="26" y="26" width="22" height="22" fill="#69db7c" stroke="#202124" stroke-width="2"/><rect x="52" y="26" width="22" height="22" fill="#69db7c" stroke="#202124" stroke-width="2"/>
+    </g>
+  </g>
+</svg>
